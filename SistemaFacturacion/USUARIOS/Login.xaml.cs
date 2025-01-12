@@ -48,7 +48,7 @@ namespace SistemaFacturacion.USUARIOS
         //valida los datos proporcionado por el usuaio,
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            Validar();
+            
         }
 
         private void Validar()
