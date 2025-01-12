@@ -42,7 +42,7 @@ namespace SistemaFacturacion
 
                 // Asigna los valores de los TextBox al objeto _cliente
                 _cliente.Nombre = txtNombre.Text.Trim();  // Usa Trim() para eliminar posibles espacios en blanco
-                _cliente.Cedula = txtRucCedula.Text.Trim();
+                _cliente.Cedula = txtCedula.Text.Trim();
                 _cliente.Direccion = txtDireccion.Text.Trim();
                 _cliente.Telefono = txtTelefono.Text.Trim();
                 _cliente.Email = txtEmail.Text.Trim();

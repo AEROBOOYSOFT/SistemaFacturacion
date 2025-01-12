@@ -19,7 +19,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding IdCliente}" Width="50"/>
                 <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
-                <DataGridTextColumn Header="RUC/Cédula" Binding="{Binding RucCedula}" Width="100"/>
+                <DataGridTextColumn Header="Rnc/Cédula" Binding="{Binding Cedula}" Width="100"/>
                 <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="100"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
                 <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="200"/>

@@ -26,12 +26,12 @@ namespace SistemaFacturacion.Clases_crud
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string query = "INSERT INTO Clientes (Nombre, RUC_Cedula, Dirección, Teléfono, Email) VALUES (@Nombre, @RucCedula, @Direccion, @Telefono, @Email)";
+                string query = "INSERT INTO Clientes (Nombre, Cedula, Dirección, Teléfono, Email) VALUES (@Nombre, @Cedula, @Direccion, @Telefono, @Email)";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Usar valores válidos para los parámetros
                 command.Parameters.AddWithValue("@Nombre", cliente.Nombre);
-                command.Parameters.AddWithValue("@RucCedula", cliente.Cedula ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Cedula", cliente.Cedula ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Direccion", cliente.Direccion ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Telefono", cliente.Telefono ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Email", cliente.Email ?? (object)DBNull.Value);
@@ -49,7 +49,7 @@ namespace SistemaFacturacion.Clases_crud
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string query = "SELECT IdCliente, Nombre, RUC_Cedula, Dirección, Teléfono, Email FROM Clientes";
+                string query = "SELECT IdCliente, Nombre, Cedula, Dirección, Teléfono, Email FROM Clientes";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -78,7 +78,7 @@ namespace SistemaFacturacion.Clases_crud
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string query = "SELECT IdCliente, Nombre, RUC_Cedula, Dirección, Teléfono, Email FROM Clientes WHERE IdCliente = @IdCliente";
+                string query = "SELECT IdCliente, Nombre, Cedula, Dirección, Teléfono, Email FROM Clientes WHERE IdCliente = @IdCliente";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@IdCliente", idCliente);
                 SqlDataReader reader = command.ExecuteReader();
@@ -106,11 +106,11 @@ namespace SistemaFacturacion.Clases_crud
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string query = "UPDATE Clientes SET Nombre = @Nombre, RUC_Cedula = @RucCedula, Dirección = @Direccion, Teléfono = @Telefono, Email = @Email WHERE IdCliente = @IdCliente";
+                string query = "UPDATE Clientes SET Nombre = @Nombre, Cedula = @Cedula, Dirección = @Direccion, Teléfono = @Telefono, Email = @Email WHERE IdCliente = @IdCliente";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@IdCliente", cliente.IdCliente);
                 command.Parameters.AddWithValue("@Nombre", cliente.Nombre);
-                command.Parameters.AddWithValue("@RucCedula", cliente.Cedula);
+                command.Parameters.AddWithValue("@Cedula", cliente.Cedula);
                 command.Parameters.AddWithValue("@Direccion", cliente.Direccion);
                 command.Parameters.AddWithValue("@Telefono", cliente.Telefono);
                 command.Parameters.AddWithValue("@Email", cliente.Email);

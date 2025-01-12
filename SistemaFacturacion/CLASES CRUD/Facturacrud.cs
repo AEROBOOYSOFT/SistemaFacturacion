@@ -23,7 +23,7 @@ namespace SistemaFacturacion.CLASES_CRUD
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT IdCliente, Nombre, RUC_Cedula, Dirección, Teléfono, Email FROM Clientes";
+                string query = "SELECT IdCliente, Nombre, Cedula, Dirección, Teléfono, Email FROM Clientes";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

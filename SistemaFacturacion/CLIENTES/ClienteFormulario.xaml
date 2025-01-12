@@ -22,8 +22,8 @@
         <TextBox x:Name="txtNombre" Grid.Row="0" Margin="100,0,0,0" Width="250" Text="{Binding Nombre}"/>
 
         <!-- RUC/Cédula -->
-        <Label Content="RUC/Cédula:" Grid.Row="1"/>
-        <TextBox x:Name="txtRucCedula" Grid.Row="1" Margin="100,0,0,0" Width="250" Text="{Binding RucCedula}"/>
+        <Label Content="Rnc/Cédula:" Grid.Row="1"/>
+        <TextBox x:Name="txtCedula" Grid.Row="1" Margin="100,0,0,0" Width="250" Text="{Binding Cedula}"/>
 
         <!-- Dirección -->
         <Label Content="Dirección:" Grid.Row="2"/>
