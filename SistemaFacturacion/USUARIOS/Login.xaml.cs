@@ -43,12 +43,12 @@ namespace SistemaFacturacion.USUARIOS
         //cierra el sistema
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+           
         }
         //valida los datos proporcionado por el usuaio,
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            Validar();
+            
         }
 
         private void Validar()
