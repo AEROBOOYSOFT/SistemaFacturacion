@@ -71,9 +71,9 @@ namespace SistemaFacturacion.USUARIOS
             }
 
             //Conexion a la base de datos Sistema de facturación
-            string connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
+            string _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
 
                 try
