@@ -32,22 +32,23 @@ namespace SistemaFacturacion.USUARIOS
         //Permite el movimiento del formulario 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
         //minimiza el formulario
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-           
+            WindowState = WindowState.Minimized;
         }
         //cierra el sistema
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-           
+            Close();
         }
         //valida los datos proporcionado por el usuaio,
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            
+            Validar();
         }
 
         private void Validar()
