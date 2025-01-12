@@ -14,5 +14,7 @@ namespace SistemaFacturacion.Clases
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
+
+        public string gff { get; set; }
     }
 }
