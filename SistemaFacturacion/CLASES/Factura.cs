@@ -8,7 +8,7 @@ namespace SistemaFacturacion.Clases
 {
     public class Factura
     {
-        public int IdFactura { get; set; }
+        public int IdFactura{ get; set; }
         public int IdCliente { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
