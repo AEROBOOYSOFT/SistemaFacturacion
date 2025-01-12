@@ -31,7 +31,7 @@ namespace SistemaFacturacion.Clases_crud
 
                 // Usar valores válidos para los parámetros
                 command.Parameters.AddWithValue("@Nombre", cliente.Nombre);
-                command.Parameters.AddWithValue("@RucCedula", cliente.RucCedula ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@RucCedula", cliente.Cedula ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Direccion", cliente.Direccion ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Telefono", cliente.Telefono ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Email", cliente.Email ?? (object)DBNull.Value);
@@ -59,7 +59,7 @@ namespace SistemaFacturacion.Clases_crud
                     {
                         IdCliente = reader.GetInt32(0),
                         Nombre = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),  // Verificar si es nulo
-                        RucCedula = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),  // Verificar si es nulo
+                        Cedula = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),  // Verificar si es nulo
                         Direccion = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),  // Verificar si es nulo
                         Telefono = reader.IsDBNull(4) ? string.Empty : reader.GetString(4),  // Verificar si es nulo
                         Email = reader.IsDBNull(5) ? string.Empty : reader.GetString(5)  // Verificar si es nulo
@@ -89,7 +89,7 @@ namespace SistemaFacturacion.Clases_crud
                     {
                         IdCliente = reader.GetInt32(0),
                         Nombre = reader.GetString(1),
-                        RucCedula = reader.GetString(2),
+                        Cedula = reader.GetString(2),
                         Direccion = reader.GetString(3),
                         Telefono = reader.GetString(4),
                         Email = reader.GetString(5)
@@ -110,7 +110,7 @@ namespace SistemaFacturacion.Clases_crud
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@IdCliente", cliente.IdCliente);
                 command.Parameters.AddWithValue("@Nombre", cliente.Nombre);
-                command.Parameters.AddWithValue("@RucCedula", cliente.RucCedula);
+                command.Parameters.AddWithValue("@RucCedula", cliente.Cedula);
                 command.Parameters.AddWithValue("@Direccion", cliente.Direccion);
                 command.Parameters.AddWithValue("@Telefono", cliente.Telefono);
                 command.Parameters.AddWithValue("@Email", cliente.Email);

@@ -33,7 +33,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                         {
                             IdCliente = reader.GetInt32(0),
                             Nombre = reader.GetString(1),
-                            RucCedula = reader.GetString(2),
+                            Cedula = reader.GetString(2),
                             Direccion = reader.IsDBNull(3) ? null : reader.GetString(3),
                             Telefono = reader.IsDBNull(4) ? null : reader.GetString(4),
                             Email = reader.IsDBNull(5) ? null : reader.GetString(5)
