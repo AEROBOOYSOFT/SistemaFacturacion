@@ -115,6 +115,11 @@ namespace SistemaFacturacion.USUARIOS
 
             }
         }
+
+        private void ResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 
