@@ -228,21 +228,24 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0">
 
-                    <TextBlock Text="Forgot Password?"
+                    <TextBlock Text="Olvidaste tu contraseña?"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
-                               FontFamily="Montserrat"/>
+                               FontFamily="Montserrat" Height="14"/>
 
-                    <TextBlock Text="Reset"
-                               Foreground="White"
-                               FontSize="12"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               Cursor="Hand"
-                               Margin="8,0,0,0"/>
+                        <Button Content="Reset"
+                          Foreground="White"
+                          FontSize="12"
+                          FontWeight="Medium"
+                          FontFamily="Montserrat"
+                          Cursor="Hand"
+                          Margin="8,0,0,0"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          Click="ResetPassword_Click" RenderTransformOrigin="0.531,0.065" Height="17"/>
 
-                </StackPanel>
+                    </StackPanel>
 
             </StackPanel>
 
