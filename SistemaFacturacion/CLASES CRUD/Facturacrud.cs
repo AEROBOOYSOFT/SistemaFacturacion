@@ -126,5 +126,45 @@ namespace SistemaFacturacion.CLASES_CRUD
                 }
             }
         }
+
+
+        public static Factura ObtenerFacturaConCliente(int facturaId)
+        {
+            Factura factura = null;
+            string query = @"
+        SELECT f.FacturaID, f.Fecha, f.Total, c.Nombre AS NombreCliente
+        FROM Facturas f
+        INNER JOIN Clientes c ON f.ClienteID = c.IdCliente
+        WHERE f.FacturaID = @FacturaID";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@FacturaID", facturaId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            factura = new Factura
+                            {
+                                IdFactura = (int)reader["FacturaID"],
+                                Fecha = (DateTime)reader["Fecha"],
+                                Total = (decimal)reader["Total"],
+                                Cliente = new Cliente
+                                {
+                                    Nombre = reader["NombreCliente"].ToString()
+                                }
+                            };
+                        }
+                    }
+                }
+            }
+
+            return factura;
+        }
+
     }
 }

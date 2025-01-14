@@ -21,5 +21,11 @@
         <Button Content="Registro Facturas" Width="156" Height="40" 
                 Click="AbrirRegistroFacturas_Click" 
                 VerticalAlignment="Top" HorizontalAlignment="Left" Margin="332,10,0,0"/>
+
+        <!-- Botón para abrir la ventana de consulta de facturas -->
+        <Button Content="Consulta Facturas" Width="156" Height="40" 
+                Click="AbrirConsultaFacturas_Click" 
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="493,10,0,0"/>
     </Grid>
 </Window>
+
