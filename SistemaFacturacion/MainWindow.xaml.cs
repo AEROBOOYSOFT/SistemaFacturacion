@@ -57,5 +57,13 @@ namespace SistemaFacturacion
             var registroFacturas = new RegistroFacturas();
             registroFacturas.Show();
         }
+
+        // Método para abrir la ventana de consulta de facturas
+        private void AbrirConsultaFacturas_Click(object sender, RoutedEventArgs e)
+        {
+            var consultaFacturas = new ConsultaFacturas();
+            consultaFacturas.ShowDialog();
+        }
+
     }
 }

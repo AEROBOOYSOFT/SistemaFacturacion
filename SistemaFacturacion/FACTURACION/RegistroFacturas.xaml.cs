@@ -90,16 +90,22 @@ namespace SistemaFacturacion.FACTURACION
                 return;
             }
 
+            // Obtener el cliente seleccionado y su nombre
+            var clienteSeleccionado = (Cliente)cmbClientes.SelectedItem;
+            string nombreCliente = clienteSeleccionado.Nombre;
+
             var factura = new Factura
             {
                 IdCliente = (int)cmbClientes.SelectedValue,
                 Fecha = DateTime.Now,
                 Total = total,
-                Detalles = detalleFactura
+                Detalles = detalleFactura,
+                Cliente = clienteSeleccionado  // Asignar el objeto cliente completo
             };
 
             try
             {
+                // Guardar la factura, incluyendo el nombre del cliente
                 Facturacrud.GuardarFactura(factura);
                 MessageBox.Show("Factura guardada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                 LimpiarFormulario();

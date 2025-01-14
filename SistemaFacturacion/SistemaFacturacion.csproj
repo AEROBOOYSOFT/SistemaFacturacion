@@ -71,6 +71,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CLASES CRUD\consultafacturacrud.cs" />
+    <Compile Include="FACTURACION\ConsultaFacturas.xaml.cs">
+      <DependentUpon>ConsultaFacturas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FACTURACION\DetalleFacturaVentana.xaml.cs">
+      <DependentUpon>DetalleFacturaVentana.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USUARIOS\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -82,6 +89,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CLIENTES\ConsultaClientes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FACTURACION\ConsultaFacturas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FACTURACION\DetalleFacturaVentana.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
