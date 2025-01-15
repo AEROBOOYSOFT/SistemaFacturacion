@@ -80,5 +80,46 @@ namespace SistemaFacturacion.FACTURACION
             }
         }
 
+        private void ExportarReporte_Click(object sender, RoutedEventArgs e)
+        {
+            // Mostrar un cuadro de diálogo para seleccionar el formato de exportación
+            var resultado = MessageBox.Show("Seleccione el formato de exportación:\n\nSí: PDF\nNo: Excel\nCancelar: Imprimir",
+                                            "Exportar Reporte",
+                                            MessageBoxButton.YesNoCancel,
+                                            MessageBoxImage.Question);
+
+            switch (resultado)
+            {
+                case MessageBoxResult.Yes:
+                    // Exportar a PDF
+                    ExportarAPDF();
+                    break;
+
+                case MessageBoxResult.No:
+                    // Exportar a Excel
+                    ExportarAExcel();
+                    break;
+
+                case MessageBoxResult.Cancel:
+                    // Imprimir reporte
+                    ImprimirReporte();
+                    break;
+            }
+        }
+        private void ExportarAPDF()
+        {
+            MessageBox.Show("Funcionalidad de exportación a PDF en desarrollo.", "Exportar a PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExportarAExcel()
+        {
+            MessageBox.Show("Funcionalidad de exportación a Excel en desarrollo.", "Exportar a Excel", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ImprimirReporte()
+        {
+            MessageBox.Show("Funcionalidad de impresión en desarrollo.", "Imprimir", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
     }
 }
