@@ -258,48 +258,73 @@ namespace SistemaFacturacion.FACTURACION
             }
         }
 
-    private void PrintPage(object sender, PrintPageEventArgs e, Factura facturaSeleccionada) 
+        private void PrintPage(object sender, PrintPageEventArgs e, Factura facturaSeleccionada)
         {
-    float yPos = 20;
-    float leftMargin = e.MarginBounds.Left;
-    System.Drawing.Font font = new System.Drawing.Font("Arial", 10);
-    
-    // Encabezado
-    e.Graphics.DrawString("Reporte de Factura", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
-    e.Graphics.DrawString($"Factura ID: {facturaSeleccionada.IdFactura}", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
-    e.Graphics.DrawString($"Cliente: {facturaSeleccionada.Cliente.Nombre}", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
-    e.Graphics.DrawString($"Fecha: {facturaSeleccionada.Fecha:dd/MM/yyyy}", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
-    e.Graphics.DrawString($"Total: {facturaSeleccionada.Total:C}", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
+            // Posición inicial en el eje Y para el contenido de la página
+            float yPos = 30;  // Aumento el margen superior
 
-    // Detalles de la factura (tabla)
-    e.Graphics.DrawString("---------------------------------------------------", font, Brushes.Black, leftMargin, yPos);
-    yPos += 20;
+            // Margen izquierdo de la página
+            float leftMargin = e.MarginBounds.Left;
 
-    // Títulos de las columnas
-    e.Graphics.DrawString("Producto", font, Brushes.Black, leftMargin, yPos);
-    e.Graphics.DrawString("Cantidad", font, Brushes.Black, leftMargin + 200, yPos);
-    e.Graphics.DrawString("Precio Unitario", font, Brushes.Black, leftMargin + 300, yPos);
-    e.Graphics.DrawString("Subtotal", font, Brushes.Black, leftMargin + 400, yPos);
-    yPos += 20;
+            // Ancho total de la página (sin márgenes)
+            float pageWidth = e.PageBounds.Width;
 
-    // Detalles de los productos
-    foreach (var detalle in facturaSeleccionada.Detalles)
-    {
-        e.Graphics.DrawString(detalle.Producto.Nombre, font, Brushes.Black, leftMargin, yPos);
-        e.Graphics.DrawString(detalle.Cantidad.ToString(), font, Brushes.Black, leftMargin + 200, yPos);
-        e.Graphics.DrawString(detalle.PrecioUnitario.ToString("C"), font, Brushes.Black, leftMargin + 300, yPos);
-        e.Graphics.DrawString(detalle.Subtotal.ToString("C"), font, Brushes.Black, leftMargin + 400, yPos);
-        yPos += 20;
-    }
+            // Fuente utilizada para el texto (aumento el tamaño de la fuente para el título)
+            System.Drawing.Font titleFont = new System.Drawing.Font("Arial", 18, System.Drawing.FontStyle.Bold); // Título más grande
+            System.Drawing.Font font = new System.Drawing.Font("Arial", 12); // Fuente normal
 
-    // Marcar fin de la página
-    e.HasMorePages = false;
-    }
+            // Calcular el ancho del texto para centrarlo
+            string title = "Reporte de Factura";
+            float titleWidth = e.Graphics.MeasureString(title, titleFont).Width;
+            float titleX = (pageWidth - titleWidth) / 2; // Calcula la posición X para centrar el título
 
+            // Título del reporte (centrado)
+            e.Graphics.DrawString(title, titleFont, Brushes.Black, titleX, yPos);
+            yPos += 50; // Incrementa la posición para evitar que el título se superponga
+
+            // Información de la factura
+            e.Graphics.DrawString($"Factura ID: {facturaSeleccionada.IdFactura}", font, Brushes.Black, leftMargin, yPos);
+            yPos += 30;
+            e.Graphics.DrawString($"Cliente: {facturaSeleccionada.Cliente.Nombre}", font, Brushes.Black, leftMargin, yPos);
+            yPos += 30;
+            e.Graphics.DrawString($"Fecha: {facturaSeleccionada.Fecha:dd/MM/yyyy}", font, Brushes.Black, leftMargin, yPos);
+            yPos += 30;
+            e.Graphics.DrawString($"Total: {facturaSeleccionada.Total:C}", font, Brushes.Black, leftMargin, yPos);
+            yPos += 30;
+
+            // Línea separadora para los detalles de la factura
+            e.Graphics.DrawString("---------------------------------------------------------------", font, Brushes.Black, leftMargin, yPos);
+            yPos += 30;
+
+            // Títulos de las columnas para los productos (ajustar posiciones)
+            e.Graphics.DrawString("Producto", font, Brushes.Black, leftMargin, yPos);
+            e.Graphics.DrawString("Cantidad", font, Brushes.Black, leftMargin + 250, yPos); // Aumento el espacio entre columnas
+            e.Graphics.DrawString("Precio Unitario", font, Brushes.Black, leftMargin + 400, yPos); // Aumento el espacio entre columnas
+            e.Graphics.DrawString("Subtotal", font, Brushes.Black, leftMargin + 550, yPos); // Aumento el espacio entre columnas
+            yPos += 30; // Salto de línea para empezar a listar los detalles de los productos
+
+            // Detalles de los productos en la factura
+            foreach (var detalle in facturaSeleccionada.Detalles)
+            {
+                // Nombre del producto
+                e.Graphics.DrawString(detalle.Producto.Nombre, font, Brushes.Black, leftMargin, yPos);
+
+                // Cantidad del producto
+                e.Graphics.DrawString(detalle.Cantidad.ToString(), font, Brushes.Black, leftMargin + 250, yPos);
+
+                // Precio unitario del producto
+                e.Graphics.DrawString(detalle.PrecioUnitario.ToString("C"), font, Brushes.Black, leftMargin + 400, yPos);
+
+                // Subtotal del producto
+                e.Graphics.DrawString(detalle.Subtotal.ToString("C"), font, Brushes.Black, leftMargin + 550, yPos);
+
+                // Incrementar la posición en Y después de cada fila de detalles
+                yPos += 30; // Aumento el espaciado entre filas
+            }
+
+            // Marcar que no hay más páginas que imprimir
+            e.HasMorePages = false;
+
+        }
     }
 }
