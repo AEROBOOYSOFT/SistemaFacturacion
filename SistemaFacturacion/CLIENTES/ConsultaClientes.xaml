@@ -1,0 +1,36 @@
+﻿<Window x:Class="SistemaFacturacion.CLIENTES.ConsultaClientes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SistemaFacturacion.CLIENTES"
+        mc:Ignorable="d"
+        Title="ConsultaClientes" Height="450" Width="800">
+    <Grid Margin="10">
+        <!-- Definir las filas para el diseño -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- DataGrid para mostrar clientes -->
+        <DataGrid x:Name="dgClientes" AutoGenerateColumns="False" Margin="10"
+                  SelectionMode="Single" IsReadOnly="True" Grid.Row="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding IdCliente}" Width="50"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
+                <DataGridTextColumn Header="Rnc/Cédula" Binding="{Binding Cedula}" Width="100"/>
+                <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="100"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Botones de acción (Agregar, Editar, Eliminar) -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1">
+            <Button x:Name="btnAgregar" Content="Agregar" Width="100" Margin="5" Click="BtnAgregar_Click"/>
+            <Button x:Name="btnEditar" Content="Editar" Width="100" Margin="5" Click="BtnEditar_Click"/>
+            <Button x:Name="btnEliminar" Content="Eliminar" Width="100" Margin="5" Click="BtnEliminar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
