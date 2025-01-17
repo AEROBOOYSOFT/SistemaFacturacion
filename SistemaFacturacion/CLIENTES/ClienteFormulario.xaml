@@ -5,42 +5,148 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaFacturacion"
         mc:Ignorable="d"
-        Title="Formulario de Cliente" Height="300" Width="400">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="Registro de Cliente" 
+        Height="600" 
+        Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#FAFBFC">
 
-        <!-- Nombre -->
-        <Label Content="Nombre:" Grid.Row="0"/>
-        <TextBox x:Name="txtNombre" Grid.Row="0" Margin="100,0,0,0" Width="250" Text="{Binding Nombre}"/>
+    <Window.Resources>
+        <!-- Estilos base para controles -->
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#4A5568"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
 
-        <!-- RUC/Cédula -->
-        <Label Content="Rnc/Cédula:" Grid.Row="1"/>
-        <TextBox x:Name="txtCedula" Grid.Row="1" Margin="100,0,0,0" Width="250" Text="{Binding Cedula}"/>
+        <Style x:Key="FormTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="6"/>
+                </Style>
+            </Style.Resources>
+        </Style>
 
-        <!-- Dirección -->
-        <Label Content="Dirección:" Grid.Row="2"/>
-        <TextBox x:Name="txtDireccion" Grid.Row="2" Margin="100,0,0,0" Width="250" Text="{Binding Direccion}"/>
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="24,8"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="6"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
 
-        <!-- Teléfono -->
-        <Label Content="Teléfono:" Grid.Row="3"/>
-        <TextBox x:Name="txtTelefono" Grid.Row="3" Margin="100,0,0,0" Width="250" Text="{Binding Telefono}"/>
+    <Border Background="White"
+            BorderBrush="#EDF2F7"
+            BorderThickness="1"
+            CornerRadius="12"
+            Margin="20">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" 
+                            ShadowDepth="1" 
+                            Direction="270" 
+                            Color="#0A000000"/>
+        </Border.Effect>
 
-        <!-- Email -->
-        <Label Content="Email:" Grid.Row="4"/>
-        <TextBox x:Name="txtEmail" Grid.Row="4" Margin="100,0,0,0" Width="250" Text="{Binding Email}"/>
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Botones -->
-        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Guardar" Width="100" Click="BtnGuardar_Click" Height="30"/>
-            <Button Content="Cancelar" Width="100" Margin="5" Click="BtnCancelar_Click" Height="30"/>
-        </StackPanel>
-    </Grid>
+            <!-- Encabezado -->
+            <TextBlock Text="Información del Cliente"
+                     FontSize="24"
+                     FontWeight="SemiBold"
+                     Foreground="#2D3748"
+                     Margin="0,0,0,30"/>
+
+            <!-- Formulario -->
+            <StackPanel Grid.Row="1" Margin="0,0,0,20">
+                <!-- Nombre -->
+                <TextBlock Text="Nombre Completo"
+                         Style="{StaticResource FormLabelStyle}"/>
+                <TextBox x:Name="txtNombre"
+                        Style="{StaticResource FormTextBoxStyle}"
+                        Margin="0,0,0,20"
+                        Text="{Binding Nombre}"/>
+
+                <!-- RNC/Cédula -->
+                <TextBlock Text="RNC/Cédula"
+                         Style="{StaticResource FormLabelStyle}"/>
+                <TextBox x:Name="txtCedula"
+                        Style="{StaticResource FormTextBoxStyle}"
+                        Margin="0,0,0,20"
+                        Text="{Binding Cedula}"/>
+
+                <!-- Dirección -->
+                <TextBlock Text="Dirección"
+                         Style="{StaticResource FormLabelStyle}"/>
+                <TextBox x:Name="txtDireccion"
+                        Style="{StaticResource FormTextBoxStyle}"
+                        Height="80"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalContentAlignment="Top"
+                        Margin="0,0,0,20"
+                        Text="{Binding Direccion}"/>
+
+                <!-- Teléfono -->
+                <TextBlock Text="Teléfono"
+                         Style="{StaticResource FormLabelStyle}"/>
+                <TextBox x:Name="txtTelefono"
+                        Style="{StaticResource FormTextBoxStyle}"
+                        Margin="0,0,0,20"
+                        Text="{Binding Telefono}"/>
+
+                <!-- Email -->
+                <TextBlock Text="Correo Electrónico"
+                         Style="{StaticResource FormLabelStyle}"/>
+                <TextBox x:Name="txtEmail"
+                        Style="{StaticResource FormTextBoxStyle}"
+                        Margin="0,0,0,20"
+                        Text="{Binding Email}"/>
+            </StackPanel>
+
+            <!-- Botones -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1"
+                        Content="Cancelar"
+                        Style="{StaticResource FormButtonStyle}"
+                        Background="#CBD5E0"
+                        Margin="0,0,12,0"
+                        Click="BtnCancelar_Click"/>
+
+                <Button Grid.Column="2"
+                        Content="Guardar Cliente"
+                        Style="{StaticResource FormButtonStyle}"
+                        Background="#38A169"
+                        Click="BtnGuardar_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

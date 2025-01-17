@@ -5,84 +5,257 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaFacturacion.FACTURACION"
         mc:Ignorable="d"
-        Title="Registro de Facturas" Height="500" Width="850"
-        Background="#F4F4F4">
+        Title="Registro de Facturas" 
+        Height="700" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F5F5">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <!-- Sección de Datos de la Factura -->
-        <GroupBox Header="Datos de la Factura" Margin="10" Grid.ColumnSpan="2" Background="#FFFFFF" BorderBrush="#D1D1D1" BorderThickness="1" Padding="10">
-            <Grid Margin="10">
+        <!-- Encabezado -->
+        <TextBlock Text="Nueva Factura"
+                   FontSize="24"
+                   FontWeight="Medium"
+                   Margin="0,0,0,20"
+                   Foreground="#1976D2"/>
+
+        <!-- Panel de datos del cliente -->
+        <Border Grid.Row="1"
+                Background="White"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,0,0,20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" 
+                                ShadowDepth="1" 
+                                Direction="270" 
+                                Color="#22000000"/>
+            </Border.Effect>
+
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
 
-                <!-- Cliente -->
-                <Label Content="Cliente:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,5"/>
-                <ComboBox x:Name="cmbClientes" Grid.Column="1" Grid.Row="0" Width="300" 
-                          DisplayMemberPath="Nombre" SelectedValuePath="IdCliente" Margin="10,5"
-                          Background="#F9F9F9" BorderBrush="#B8B8B8" BorderThickness="1" Grid.RowSpan="2"/>
+                <TextBlock Text="Cliente:" 
+                         VerticalAlignment="Center"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,0"/>
+
+                <ComboBox x:Name="cmbClientes" 
+                         Grid.Column="1"
+                         Height="40"
+                         Padding="8,8"
+                         DisplayMemberPath="Nombre" 
+                         SelectedValuePath="IdCliente"
+                         Background="White"
+                         BorderBrush="#E0E0E0"
+                         BorderThickness="1">
+                    <ComboBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4"/>
+                        </Style>
+                    </ComboBox.Resources>
+                </ComboBox>
             </Grid>
-        </GroupBox>
+        </Border>
 
-        <!-- Sección de Productos -->
-        <GroupBox Header="Productos" Margin="10,83,10,40" Grid.ColumnSpan="2" Background="#FFFFFF" BorderBrush="#D1D1D1" BorderThickness="1" Padding="10">
-            <Grid Margin="10">
+        <!-- Panel de productos -->
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,0,0,20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" 
+                                ShadowDepth="1" 
+                                Direction="270" 
+                                Color="#22000000"/>
+            </Border.Effect>
+
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Selección de producto -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0,0,10">
-                    <Label Content="Producto:" VerticalAlignment="Center" Width="80" FontWeight="Bold"/>
-                    <ComboBox x:Name="cmbProductos" Width="300" Margin="10,0,0,0" 
-                              DisplayMemberPath="Nombre" SelectedValuePath="ProductoID"
-                              Background="#F9F9F9" BorderBrush="#B8B8B8" BorderThickness="1"/>
-                    <Label Content="Cantidad:" VerticalAlignment="Center" Margin="20,0,0,0" Width="80" FontWeight="Bold"/>
-                    <TextBox x:Name="txtCantidad" Width="100" Margin="10,0"
-                             Background="#F9F9F9" BorderBrush="#B8B8B8" BorderThickness="1"/>
-                    <Button Content="Agregar" Click="btnAgregarProducto_Click" Margin="10,0,0,0" Width="90"/>
-                </StackPanel>
+                <!-- Barra de agregar producto -->
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <!-- Detalle de productos -->
-                <DataGrid x:Name="dgDetalleFactura" Grid.Row="1" AutoGenerateColumns="False"
-                          IsReadOnly="True" CanUserAddRows="False" Margin="0,10,0,27" Background="#FFFFFF" 
-                          BorderBrush="#D1D1D1" BorderThickness="1" HorizontalGridLinesBrush="#D1D1D1" 
-                          VerticalGridLinesBrush="#D1D1D1">
+                    <TextBlock Text="Producto:" 
+                             VerticalAlignment="Center"
+                             FontWeight="SemiBold"
+                             Margin="0,0,20,0"/>
+
+                    <ComboBox x:Name="cmbProductos" 
+                             Grid.Column="1"
+                             Height="40"
+                             Margin="0,0,20,0"
+                             Padding="8,8"
+                             DisplayMemberPath="Nombre" 
+                             SelectedValuePath="ProductoID"
+                             Background="White"
+                             BorderBrush="#E0E0E0"
+                             BorderThickness="1">
+                        <ComboBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </ComboBox.Resources>
+                    </ComboBox>
+
+                    <TextBlock Text="Cantidad:" 
+                             Grid.Column="2"
+                             VerticalAlignment="Center"
+                             FontWeight="SemiBold"
+                             Margin="0,0,20,0"/>
+
+                    <TextBox x:Name="txtCantidad" 
+                            Grid.Column="3"
+                            Height="40"
+                            Padding="8,8"
+                            Margin="0,0,20,0"
+                            Background="White"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+
+                    <Button Content="Agregar Producto"
+                            Grid.Column="4"
+                            Height="40"
+                            Padding="16,8"
+                            Background="#2196F3"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Click="btnAgregarProducto_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+
+                <!-- Lista de productos -->
+                <DataGrid x:Name="dgDetalleFactura" 
+                         Grid.Row="1"
+                         AutoGenerateColumns="False"
+                         IsReadOnly="True"
+                         CanUserAddRows="False"
+                         GridLinesVisibility="Horizontal"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         RowBackground="White"
+                         AlternatingRowBackground="#F8F8F8"
+                         Margin="0,0,0,20">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#E3F2FD"/>
+                            <Setter Property="Padding" Value="10"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Producto" Binding="{Binding NombreProducto}" Width="200"/>
-                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="100"/>
-                        <DataGridTextColumn Header="Precio Unitario" Binding="{Binding PrecioUnitario}" Width="120"/>
-                        <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal}" Width="120"/>
+                        <DataGridTextColumn Header="Producto" 
+                                          Binding="{Binding NombreProducto}" 
+                                          Width="*"/>
+                        <DataGridTextColumn Header="Cantidad" 
+                                          Binding="{Binding Cantidad}" 
+                                          Width="100"/>
+                        <DataGridTextColumn Header="Precio Unitario" 
+                                          Binding="{Binding PrecioUnitario, StringFormat=C}" 
+                                          Width="150"/>
+                        <DataGridTextColumn Header="Subtotal" 
+                                          Binding="{Binding Subtotal, StringFormat=C}" 
+                                          Width="150"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
                 <!-- Total -->
-                <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,14,0,5">
-                    <Label Content="Total:" FontWeight="Bold" VerticalAlignment="Center" Width="50"/>
-                    <TextBox x:Name="txtTotal" IsReadOnly="True" Width="120" HorizontalAlignment="Left"
-                             Background="#F9F9F9" BorderBrush="#B8B8B8" BorderThickness="1"/>
+                <StackPanel Grid.Row="2" 
+                          Orientation="Horizontal" 
+                          HorizontalAlignment="Right">
+                    <TextBlock Text="Total:" 
+                             FontWeight="SemiBold"
+                             FontSize="16"
+                             VerticalAlignment="Center"
+                             Margin="0,0,20,0"/>
+                    <TextBox x:Name="txtTotal" 
+                            Width="200"
+                            Height="40"
+                            Padding="8,8"
+                            IsReadOnly="True"
+                            Background="#E3F2FD"
+                            BorderBrush="#2196F3"
+                            BorderThickness="2"
+                            FontWeight="Bold"
+                            FontSize="16">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
                 </StackPanel>
             </Grid>
-        </GroupBox>
+        </Border>
 
-        <!-- Botones -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,15" Grid.Column="1">
-            <Button Content="Guardar" Click="btnGuardar_Click" Width="100" />
-            <Button Content="Cancelar" Width="100" Click="btnCancelar_Click"/>
+        <!-- Botones de acción -->
+        <StackPanel Grid.Row="3" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right">
+            <Button Content="Guardar Factura"
+                    Background="#4CAF50"
+                    Margin="8"
+                    Padding="16,8"
+                    Height="40"
+                    MinWidth="120"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="btnGuardar_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Cancelar"
+                    Background="#757575"
+                    Margin="8"
+                    Padding="16,8"
+                    Height="40"
+                    MinWidth="120"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="btnCancelar_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
-
-
