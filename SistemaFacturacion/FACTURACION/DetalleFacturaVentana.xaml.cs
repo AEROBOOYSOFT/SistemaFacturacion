@@ -37,6 +37,9 @@ namespace SistemaFacturacion.FACTURACION
             // Si necesitas mostrar más detalles, puedes agregarlos aquí
         }
 
+        private void Imprimir_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

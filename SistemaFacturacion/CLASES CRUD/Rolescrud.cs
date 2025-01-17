@@ -41,7 +41,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 var query = "UPDATE Roles SET Nombre = @Nombre, Descripcion = @Descripcion WHERE RoleID = @RoleID";
                 using (var command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@RoleID", rol.RoleID);
+                    command.Parameters.AddWithValue("@RoleID", rol.RolID);
                     command.Parameters.AddWithValue("@Nombre", rol.Nombre);
                     command.Parameters.AddWithValue("@Descripcion", rol.Descripcion);
                     command.ExecuteNonQuery();
