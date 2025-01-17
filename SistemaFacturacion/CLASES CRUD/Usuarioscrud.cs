@@ -1,6 +1,7 @@
 ﻿using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,19 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public class Usuarioscrud
     {
+        private readonly string _connectionString;
+
+        public Usuarioscrud()
+        {
+            // Leer la cadena de conexión desde el archivo App.config
+            _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
+        }
+
         public void CrearUsuario(Usuario usuario)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = @"INSERT INTO Usuarios 
@@ -43,7 +52,7 @@ namespace SistemaFacturacion.CLASES_CRUD
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = @"UPDATE Usuarios 
@@ -75,7 +84,7 @@ namespace SistemaFacturacion.CLASES_CRUD
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = "DELETE FROM Usuarios WHERE UsuarioID = @UsuarioID";
@@ -98,7 +107,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = "SELECT * FROM Usuarios";

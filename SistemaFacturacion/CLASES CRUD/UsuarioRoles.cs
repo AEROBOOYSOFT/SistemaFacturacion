@@ -1,6 +1,7 @@
 ﻿using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,20 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public class UsuarioRoles
     {
+
+        private readonly string _connectionString;
+
+        public UsuarioRoles()
+        {
+            // Leer la cadena de conexión desde el archivo App.config
+            _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
+        }
+
         public void AsignarRolAUsuario(int usuarioId, int rolId)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = "INSERT INTO UsuarioRoles (UsuarioID, RolID) VALUES (@UsuarioID, @RolID)";
@@ -36,7 +46,7 @@ namespace SistemaFacturacion.CLASES_CRUD
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = "DELETE FROM UsuarioRoles WHERE UsuarioID = @UsuarioID AND RolID = @RolID";
@@ -60,7 +70,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = @"SELECT R.RolID, R.Nombre, R.Descripcion
@@ -100,7 +110,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = @"SELECT U.UsuarioID, U.NombreCompleto, U.Email, U.NombreUsuario, U.Activo, U.FechaCreacion

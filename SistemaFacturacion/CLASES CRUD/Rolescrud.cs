@@ -1,6 +1,7 @@
 ﻿using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,19 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public class Rolescrud
     {
+        private readonly string _connectionString;
+
+        public Rolescrud()
+        {
+            // Leer la cadena de conexión desde el archivo App.config
+            _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
+        }
 
         public void CrearRol(Rol rol)
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
                     var query = "INSERT INTO Roles (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
@@ -35,7 +43,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
         public void ActualizarRol(Rol rol)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var query = "UPDATE Roles SET Nombre = @Nombre, Descripcion = @Descripcion WHERE RoleID = @RoleID";
@@ -50,7 +58,7 @@ namespace SistemaFacturacion.CLASES_CRUD
         }
         public void EliminarRol(int roleId)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var query = "DELETE FROM Roles WHERE RoleID = @RoleID";
@@ -65,7 +73,7 @@ namespace SistemaFacturacion.CLASES_CRUD
         {
             var roles = new List<Rol>();
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var query = "SELECT * FROM Roles";
