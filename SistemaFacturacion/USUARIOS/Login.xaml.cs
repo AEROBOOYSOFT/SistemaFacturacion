@@ -57,13 +57,13 @@ namespace SistemaFacturacion.USUARIOS
             //Llama la clase usuario
             Usuario usuario = new Usuario();
 
-            usuario.Username = txtUser.Text;
-            usuario.Password = txtPass.Password;
+            usuario.NombreUsuario = txtUser.Text;
+            usuario.Contraseña = txtPass.Password;
 
             /*confirma que los campos no esten vacios,condición en la que ambas deben de ser verdadera
             si estan vacio pedira los datos, de otro modo realiza la conexion con la base de datos
           */
-            if (string.IsNullOrWhiteSpace(usuario.Username) || string.IsNullOrWhiteSpace(usuario.Password))
+            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario) || string.IsNullOrWhiteSpace(usuario.Contraseña))
             {
                 MessageBox.Show("Verificar campos.", "Error de Validación", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Warning);
                 return;
@@ -83,8 +83,8 @@ namespace SistemaFacturacion.USUARIOS
                     string query = "Select COUNT(1) from USUARIOS where Username=@Username And Password=@Password ";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = usuario.Username;
-                        cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = usuario.Password;
+                        cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = usuario.NombreUsuario;
+                        cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = usuario.Contraseña;
 
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());

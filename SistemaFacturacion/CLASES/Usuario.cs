@@ -8,9 +8,25 @@ namespace SistemaFacturacion.CLASES
 {
     public class Usuario
     {
-        public int IdUsuario { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Rol { get; set; }
+        public int UsuarioID { get; set; }
+        public string NombreCompleto { get; set; }
+        public string Email { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; } // Almacenar encriptada
+        public bool Activo { get; set; }
+        public DateTime FechaCreacion { get; set; }
+
+        public Usuario() { }
+
+        public Usuario(int usuarioId, string nombreCompleto, string email, string nombreUsuario, string contraseña, bool activo, DateTime fechaCreacion)
+        {
+            UsuarioID = usuarioId;
+            NombreCompleto = nombreCompleto;
+            Email = email;
+            NombreUsuario = nombreUsuario;
+            Contraseña = contraseña;
+            Activo = activo;
+            FechaCreacion = fechaCreacion;
+        }
     }
 }
