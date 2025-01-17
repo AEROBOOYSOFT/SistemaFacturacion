@@ -119,6 +119,9 @@
     <Compile Include="PRODUCTOS\ProductoFormulario.xaml.cs">
       <DependentUpon>ProductoFormulario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\GestionRoles.xaml.cs">
+      <DependentUpon>GestionRoles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USUARIOS\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PRODUCTOS\ProductoFormulario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GestionRoles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
