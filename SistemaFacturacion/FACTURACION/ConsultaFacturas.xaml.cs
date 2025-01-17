@@ -65,7 +65,6 @@ namespace SistemaFacturacion.FACTURACION
         {
             this.Close();
         }
-
         private void AnularFactura_Click(object sender, RoutedEventArgs e)
         {
             // Verificar si hay una factura seleccionada
@@ -89,7 +88,6 @@ namespace SistemaFacturacion.FACTURACION
                 MessageBox.Show("Por favor, selecciona una factura para anular.", "Anular Factura", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
         private void ExportarReporte_Click(object sender, RoutedEventArgs e)
         {
             // Mostrar un cuadro de diálogo para seleccionar el formato de exportación
