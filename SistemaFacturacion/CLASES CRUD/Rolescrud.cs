@@ -76,7 +76,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                     {
                         roles.Add(new Rol
                         {
-                            RoleID = reader.GetInt32(0),
+                            RolID = reader.GetInt32(0),
                             Nombre = reader.GetString(1),
                             Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
                         });
