@@ -5,11 +5,185 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaFacturacion.FACTURACION"
         mc:Ignorable="d"
-        Title="Detalles de Factura" Height="350" Width="525">
-    <Grid>
-        <Label x:Name="lblFacturaId" Content="Factura ID: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-        <Label x:Name="lblCliente" Content="Cliente: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0"/>
-        <Label x:Name="lblTotal" Content="Total: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,70,0,0"/>
-        <!-- Agregar más controles para mostrar los detalles de la factura -->
+        Title="Detalles de Factura" 
+        Height="600" 
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F5F5">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <TextBlock Text="Detalles de Factura"
+                   FontSize="24"
+                   FontWeight="Medium"
+                   Margin="0,0,0,20"
+                   Foreground="#1976D2"/>
+
+        <!-- Panel de información principal -->
+        <Border Grid.Row="1"
+                Background="White"
+                CornerRadius="8"
+                Padding="20"
+                Margin="0,0,0,20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" 
+                                ShadowDepth="1" 
+                                Direction="270" 
+                                Color="#22000000"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Información básica -->
+                <TextBlock Text="Factura ID:" 
+                         Grid.Column="0" 
+                         Grid.Row="0"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,15"/>
+                <TextBlock x:Name="lblFacturaId" 
+                         Grid.Column="1" 
+                         Grid.Row="0"
+                         Margin="0,0,40,15"/>
+
+                <TextBlock Text="Fecha:" 
+                         Grid.Column="2" 
+                         Grid.Row="0"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,15"/>
+                <TextBlock x:Name="lblFecha" 
+                         Grid.Column="3" 
+                         Grid.Row="0"
+                         Margin="0,0,0,15"/>
+
+                <TextBlock Text="Cliente:" 
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,15"/>
+                <TextBlock x:Name="lblCliente" 
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         Grid.ColumnSpan="3"
+                         Margin="0,0,0,15"/>
+
+                <TextBlock Text="Total:" 
+                         Grid.Column="0" 
+                         Grid.Row="2"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,0"/>
+                <TextBlock x:Name="lblTotal" 
+                         Grid.Column="1" 
+                         Grid.Row="2"
+                         Foreground="#2196F3"
+                         FontWeight="Bold"/>
+
+                <TextBlock Text="Estado:" 
+                         Grid.Column="2" 
+                         Grid.Row="2"
+                         FontWeight="SemiBold"
+                         Margin="0,0,20,0"/>
+                <TextBlock x:Name="lblEstado" 
+                         Grid.Column="3" 
+                         Grid.Row="2"/>
+            </Grid>
+        </Border>
+
+        <!-- Panel de detalles de productos -->
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="8"
+                Margin="0,0,0,20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" 
+                                ShadowDepth="1" 
+                                Direction="270" 
+                                Color="#22000000"/>
+            </Border.Effect>
+
+            <DataGrid x:Name="dgDetalles" 
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True"
+                      GridLinesVisibility="Horizontal"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      RowBackground="White"
+                      AlternatingRowBackground="#F8F8F8"
+                      Margin="2">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#E3F2FD"/>
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Producto" 
+                                      Binding="{Binding NombreProducto}" 
+                                      Width="*"/>
+                    <DataGridTextColumn Header="Cantidad" 
+                                      Binding="{Binding Cantidad}" 
+                                      Width="100"/>
+                    <DataGridTextColumn Header="Precio Unit." 
+                                      Binding="{Binding PrecioUnitario, StringFormat=C}" 
+                                      Width="120"/>
+                    <DataGridTextColumn Header="Subtotal" 
+                                      Binding="{Binding Subtotal, StringFormat=C}" 
+                                      Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- Botones de acción -->
+        <StackPanel Grid.Row="3" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right">
+            <Button Content="Imprimir"
+                    Background="#4CAF50"
+                    Margin="8"
+                    Padding="16,8"
+                    Height="40"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="Imprimir_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Cerrar"
+                    Background="#757575"
+                    Margin="8"
+                    Padding="16,8"
+                    Height="40"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Click="Cerrar_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
