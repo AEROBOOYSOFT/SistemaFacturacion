@@ -79,6 +79,7 @@
     <Compile Include="CLASES CRUD\servicioderoles.cs" />
     <Compile Include="CLASES CRUD\UsuarioRoles.cs" />
     <Compile Include="CLASES CRUD\Usuarioscrud.cs" />
+    <Compile Include="CLASES CRUD\UsuarioService.cs" />
     <Compile Include="CLASES\Cliente.cs" />
     <Compile Include="CLASES\Configuracion.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />

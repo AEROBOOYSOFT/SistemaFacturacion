@@ -9,7 +9,7 @@ namespace SistemaFacturacion.CLASES
     public class UsuarioRol
     {
         public int UsuarioID { get; set; }
-        public int RoleID { get; set; }
+        public int RolID { get; set; }
         public DateTime FechaAsignacion { get; set; }
 
         public UsuarioRol() { }
@@ -17,7 +17,7 @@ namespace SistemaFacturacion.CLASES
         public UsuarioRol(int usuarioId, int roleId, DateTime fechaAsignacion)
         {
             UsuarioID = usuarioId;
-            RoleID = roleId;
+            RolID = roleId;
             FechaAsignacion = fechaAsignacion;
         }
     }
