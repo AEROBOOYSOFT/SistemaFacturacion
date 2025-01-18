@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SistemaFacturacion.CLASES_CRUD
 {
@@ -67,19 +64,117 @@ namespace SistemaFacturacion.CLASES_CRUD
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        // Asegurando que los parámetros son correctamente asignados
+                        // Asignar parámetros
                         command.Parameters.Add(new SqlParameter("@Nombre", rol.NombreRol));
                         command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(rol.Descripcion) ? (object)DBNull.Value : rol.Descripcion));
 
-                        // Ejecutar la consulta SQL
                         command.ExecuteNonQuery();
                     }
                 }
             }
             catch (Exception ex)
             {
-                // En caso de error, se lanza una excepción con el mensaje de error.
                 throw new Exception("Error al guardar el rol: " + ex.Message);
+            }
+        }
+
+        // Actualizar un rol existente en la base de datos
+        public void ActualizarRol(Rol rol)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var query = "UPDATE Roles SET Nombre = @Nombre, Descripcion = @Descripcion WHERE RolID = @RolID";
+
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@Nombre", rol.NombreRol));
+                        command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(rol.Descripcion) ? (object)DBNull.Value : rol.Descripcion));
+                        command.Parameters.Add(new SqlParameter("@RolID", rol.RolID));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el rol: " + ex.Message);
+            }
+        }
+
+        // Eliminar un rol por su ID
+        public void EliminarRol(int rolId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var query = "DELETE FROM Roles WHERE RolID = @RolID";
+
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@RolID", rolId));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar el rol: " + ex.Message);
+            }
+        }
+
+        // Asignar permisos a un rol
+        public void AsignarPermisoARol(int rolId, int permisoId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var query = "INSERT INTO RolPermiso (RolID, PermisoID) VALUES (@RolID, @PermisoID)";
+
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@RolID", rolId));
+                        command.Parameters.Add(new SqlParameter("@PermisoID", permisoId));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al asignar permiso al rol: " + ex.Message);
+            }
+        }
+
+        // Quitar permisos de un rol
+        public void QuitarPermisoDeRol(int rolId, int permisoId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    var query = "DELETE FROM RolPermiso WHERE RolID = @RolID AND PermisoID = @PermisoID";
+
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(new SqlParameter("@RolID", rolId));
+                        command.Parameters.Add(new SqlParameter("@PermisoID", permisoId));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al quitar permiso del rol: " + ex.Message);
             }
         }
     }

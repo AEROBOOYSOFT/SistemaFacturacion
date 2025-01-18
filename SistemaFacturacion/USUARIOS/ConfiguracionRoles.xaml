@@ -1,0 +1,37 @@
+﻿<Window x:Class="SistemaFacturacion.USUARIOS.ConfiguracionRoles"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuración de Roles y Permisos" Height="400" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Encabezado -->
+        <TextBlock Text="Gestión de Roles y Permisos" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <!-- Contenido Principal -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Lista de Roles -->
+            <StackPanel Margin="10">
+                <TextBlock Text="Roles:" FontWeight="Bold"/>
+                <ListBox x:Name="lbRoles" SelectionChanged="LbRoles_SelectionChanged" Height="200"/>
+                <Button Content="Agregar Rol" Margin="0,10,0,0" Click="BtnAgregarRol_Click"/>
+            </StackPanel>
+
+            <!-- Permisos del Rol -->
+            <StackPanel Margin="10" Grid.Column="1">
+                <TextBlock Text="Permisos:" FontWeight="Bold"/>
+                <ListBox x:Name="lbPermisos" Height="150"/>
+                <Button Content="Asignar Permiso" Margin="0,10,0,0" Click="BtnAsignarPermiso_Click"/>
+                <Button Content="Quitar Permiso" Click="BtnQuitarPermiso_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

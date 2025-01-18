@@ -74,6 +74,7 @@
     <Compile Include="CLASES CRUD\Clientecrud.cs" />
     <Compile Include="CLASES CRUD\consultafacturacrud.cs" />
     <Compile Include="CLASES CRUD\Facturacrud.cs" />
+    <Compile Include="CLASES CRUD\PermisosService.cs" />
     <Compile Include="CLASES CRUD\Productocrud.cs" />
     <Compile Include="CLASES CRUD\Rolescrud.cs" />
     <Compile Include="CLASES CRUD\servicioderoles.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="CLASES\Configuracion.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
+    <Compile Include="CLASES\Permiso.cs" />
     <Compile Include="CLASES\Producto.cs" />
     <Compile Include="CLASES\Rol.cs" />
     <Compile Include="CLASES\Usuario.cs" />
@@ -120,6 +122,15 @@
     </Compile>
     <Compile Include="PRODUCTOS\ProductoFormulario.xaml.cs">
       <DependentUpon>ProductoFormulario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\AsignarPermisosARoles.xaml.cs">
+      <DependentUpon>AsignarPermisosARoles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\ConfiguracionRoles.xaml.cs">
+      <DependentUpon>ConfiguracionRoles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\GestionPermisos.xaml.cs">
+      <DependentUpon>GestionPermisos.xaml</DependentUpon>
     </Compile>
     <Compile Include="USUARIOS\GestionRoles.xaml.cs">
       <DependentUpon>GestionRoles.xaml</DependentUpon>
@@ -168,6 +179,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PRODUCTOS\ProductoFormulario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\AsignarPermisosARoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\ConfiguracionRoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GestionPermisos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
