@@ -18,6 +18,7 @@ namespace SistemaFacturacion.CLASES_CRUD
             // Leer la cadena de conexión desde el archivo App.config
             _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
         }
+
         public List<Usuario> ObtenerTodosLosUsuarios()
         {
             var usuarios = new List<Usuario>();
@@ -27,27 +28,44 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = @"SELECT u.UsuarioID, u.NombreUsuario, u.Email, u.RolID, r.Nombre AS RolNombre
-                          FROM Usuarios u
-                          INNER JOIN Roles r ON u.RolID = r.RolID";
+                    var query = @"
+                        SELECT u.UsuarioID, u.NombreUsuario, u.Email, u.Contraseña, u.Activo, u.FechaCreacion, ur.RolID, r.Nombre AS RolNombre
+                        FROM Usuarios u
+                        LEFT JOIN UsuarioRol ur ON u.UsuarioID = ur.UsuarioID
+                        LEFT JOIN Roles r ON ur.RolID = r.RolID";
 
                     using (var command = new SqlCommand(query, connection))
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            usuarios.Add(new Usuario
+                            // Verificar si el usuario ya está en la lista
+                            var usuarioID = reader.GetInt32(0);
+                            var usuario = usuarios.FirstOrDefault(u => u.UsuarioID == usuarioID);
+                            if (usuario == null)
                             {
-                                UsuarioID = reader.GetInt32(0),
-                                NombreUsuario = reader.GetString(1),
-                                Email = reader.GetString(2),
-                                RolID = reader.GetInt32(3),
-                                Rol = new Rol
+                                usuario = new Usuario
                                 {
-                                    RolID = reader.GetInt32(3),
-                                    Nombre = reader.GetString(4)
-                                }
-                            });
+                                    UsuarioID = usuarioID,
+                                    NombreUsuario = reader.GetString(1),
+                                    Email = reader.GetString(2),
+                                    Contraseña = reader.GetString(3),
+                                    Activo = reader.GetBoolean(4),
+                                    FechaCreacion = reader.GetDateTime(5),
+                                    Roles = new List<Rol>()
+                                };
+                                usuarios.Add(usuario);
+                            }
+
+                            // Agregar el rol si existe
+                            if (!reader.IsDBNull(6) && !usuario.Roles.Any(r => r.RolID == reader.GetInt32(6)))
+                            {
+                                usuario.Roles.Add(new Rol
+                                {
+                                    RolID = reader.GetInt32(6),
+                                    NombreRol = reader.GetString(7)
+                                });
+                            }
                         }
                     }
                 }
@@ -67,16 +85,36 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = @"INSERT INTO Usuarios (NombreUsuario, Email, Contraseña, RolID) 
-                          VALUES (@NombreUsuario, @Email, @Password, @RolID)";
+                    var query = @"INSERT INTO Usuarios (NombreUsuario, Email, Contraseña, Activo, FechaCreacion) 
+                                  VALUES (@NombreUsuario, @Email, @Contraseña, @Activo, @FechaCreacion);
+                                  SELECT SCOPE_IDENTITY();"; // Devuelve el ID del usuario insertado
 
                     using (var command = new SqlCommand(query, connection))
                     {
                         command.Parameters.Add(new SqlParameter("@NombreUsuario", usuario.NombreUsuario));
                         command.Parameters.Add(new SqlParameter("@Email", usuario.Email));
-                        command.Parameters.Add(new SqlParameter("@Password", usuario.Contraseña));
-                        command.Parameters.Add(new SqlParameter("@RolID", usuario.RolID));
-                        command.ExecuteNonQuery();
+                        command.Parameters.Add(new SqlParameter("@Contraseña", usuario.Contraseña));
+                        command.Parameters.Add(new SqlParameter("@Activo", usuario.Activo));
+                        command.Parameters.Add(new SqlParameter("@FechaCreacion", usuario.FechaCreacion));
+
+                        var usuarioID = Convert.ToInt32(command.ExecuteScalar());
+
+                        // Insertar los roles asociados al usuario
+                        if (usuario.Roles != null)
+                        {
+                            foreach (var rol in usuario.Roles)
+                            {
+                                var queryRol = @"INSERT INTO UsuarioRol (UsuarioID, RolID, FechaAsignacion) 
+                                                 VALUES (@UsuarioID, @RolID, @FechaAsignacion)";
+                                using (var commandRol = new SqlCommand(queryRol, connection))
+                                {
+                                    commandRol.Parameters.Add(new SqlParameter("@UsuarioID", usuarioID));
+                                    commandRol.Parameters.Add(new SqlParameter("@RolID", rol.RolID));
+                                    commandRol.Parameters.Add(new SqlParameter("@FechaAsignacion", DateTime.Now));
+                                    commandRol.ExecuteNonQuery();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -85,10 +123,5 @@ namespace SistemaFacturacion.CLASES_CRUD
                 throw new Exception("Error al guardar el usuario: " + ex.Message);
             }
         }
-
-
-
-
-
     }
 }

@@ -11,7 +11,6 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public class UsuarioRoles
     {
-
         private readonly string _connectionString;
 
         public UsuarioRoles()
@@ -20,6 +19,7 @@ namespace SistemaFacturacion.CLASES_CRUD
             _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
         }
 
+        // Asignar un rol a un usuario
         public void AsignarRolAUsuario(int usuarioId, int rolId)
         {
             try
@@ -27,7 +27,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "INSERT INTO UsuarioRoles (UsuarioID, RolID) VALUES (@UsuarioID, @RolID)";
+                    var query = "INSERT INTO UsuarioRol (UsuarioID, RolID) VALUES (@UsuarioID, @RolID)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -42,6 +42,8 @@ namespace SistemaFacturacion.CLASES_CRUD
                 throw new Exception("Error al asignar el rol al usuario: " + ex.Message);
             }
         }
+
+        // Eliminar un rol de un usuario
         public void EliminarRolDeUsuario(int usuarioId, int rolId)
         {
             try
@@ -49,7 +51,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "DELETE FROM UsuarioRoles WHERE UsuarioID = @UsuarioID AND RolID = @RolID";
+                    var query = "DELETE FROM UsuarioRol WHERE UsuarioID = @UsuarioID AND RolID = @RolID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -64,6 +66,8 @@ namespace SistemaFacturacion.CLASES_CRUD
                 throw new Exception("Error al eliminar el rol del usuario: " + ex.Message);
             }
         }
+
+        // Obtener roles de un usuario
         public List<Rol> ObtenerRolesDeUsuario(int usuarioId)
         {
             var roles = new List<Rol>();
@@ -73,10 +77,10 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = @"SELECT R.RolID, R.Nombre, R.Descripcion
-                          FROM UsuarioRoles UR
-                          INNER JOIN Roles R ON UR.RolID = R.RolID
-                          WHERE UR.UsuarioID = @UsuarioID";
+                    var query = @"SELECT R.RolID, R.NombreRol, R.Descripcion
+                                  FROM UsuarioRol UR
+                                  INNER JOIN Roles R ON UR.RolID = R.RolID
+                                  WHERE UR.UsuarioID = @UsuarioID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -89,7 +93,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                                 roles.Add(new Rol
                                 {
                                     RolID = reader.GetInt32(0),
-                                    Nombre = reader.GetString(1),
+                                    NombreRol = reader.GetString(1),
                                     Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
                                 });
                             }
@@ -104,6 +108,8 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             return roles;
         }
+
+        // Obtener usuarios de un rol específico
         public List<Usuario> ObtenerUsuariosDeRol(int rolId)
         {
             var usuarios = new List<Usuario>();
@@ -114,9 +120,9 @@ namespace SistemaFacturacion.CLASES_CRUD
                 {
                     connection.Open();
                     var query = @"SELECT U.UsuarioID, U.NombreCompleto, U.Email, U.NombreUsuario, U.Activo, U.FechaCreacion
-                          FROM UsuarioRoles UR
-                          INNER JOIN Usuarios U ON UR.UsuarioID = U.UsuarioID
-                          WHERE UR.RolID = @RolID";
+                                  FROM UsuarioRol UR
+                                  INNER JOIN Usuarios U ON UR.UsuarioID = U.UsuarioID
+                                  WHERE UR.RolID = @RolID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -133,7 +139,9 @@ namespace SistemaFacturacion.CLASES_CRUD
                                     Email = reader.GetString(2),
                                     NombreUsuario = reader.GetString(3),
                                     Activo = reader.GetBoolean(4),
-                                    FechaCreacion = reader.GetDateTime(5)
+                                    FechaCreacion = reader.GetDateTime(5),
+                                    // Aquí podrías agregar la carga de roles si es necesario
+                                    Roles = new List<Rol>() // Vacío por ahora, pero se puede cargar
                                 });
                             }
                         }
@@ -147,6 +155,5 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             return usuarios;
         }
-
     }
 }

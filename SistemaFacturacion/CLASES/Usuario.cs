@@ -12,11 +12,12 @@ namespace SistemaFacturacion.CLASES
         public string NombreCompleto { get; set; }
         public string Email { get; set; }
         public string NombreUsuario { get; set; }
-        public string Contraseña { get; set; } // Almacenar encriptada
+        public string Contraseña { get; set; } 
         public bool Activo { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public int RolID { get; internal set; }
+        public int RoleID { get; internal set; }
         public Rol Rol { get; internal set; }
+        public List<Rol> Roles { get; set; } // Lista de roles del usuario
 
         public Usuario() { }
 
@@ -29,6 +30,7 @@ namespace SistemaFacturacion.CLASES
             Contraseña = contraseña;
             Activo = activo;
             FechaCreacion = fechaCreacion;
+            Roles = new List<Rol>(); // Inicializar la lista
         }
     }
 }

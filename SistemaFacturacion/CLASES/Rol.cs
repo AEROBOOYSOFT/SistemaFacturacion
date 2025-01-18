@@ -9,7 +9,7 @@ namespace SistemaFacturacion.CLASES
     public class Rol
     {
         public int RolID { get; set; }
-        public string Nombre { get; set; }
+        public string NombreRol { get; set; }
         public string Descripcion { get; set; }
 
         public Rol() { }
@@ -17,7 +17,7 @@ namespace SistemaFacturacion.CLASES
         public Rol(int roleId, string nombre, string descripcion)
         {
             RolID = roleId;
-            Nombre = nombre;
+            NombreRol = nombre;
             Descripcion = descripcion;
         }
     }

@@ -44,7 +44,7 @@ namespace SistemaFacturacion.USUARIOS
 
             var nuevoRol = new Rol
             {
-                Nombre = txtNombreRol.Text,
+                NombreRol = txtNombreRol.Text,
                 Descripcion = txtDescripcionRol.Text
             };
 

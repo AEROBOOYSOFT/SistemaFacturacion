@@ -29,7 +29,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                     var query = "INSERT INTO Roles (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@Nombre", rol.Nombre));
+                        command.Parameters.Add(new SqlParameter("@Nombre", rol.NombreRol));
                         command.Parameters.Add(new SqlParameter("@Descripcion", rol.Descripcion ?? (object)DBNull.Value));
                         command.ExecuteNonQuery();
                     }
@@ -43,60 +43,79 @@ namespace SistemaFacturacion.CLASES_CRUD
 
         public void ActualizarRol(Rol rol)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
-                var query = "UPDATE Roles SET Nombre = @Nombre, Descripcion = @Descripcion WHERE RoleID = @RoleID";
-                using (var command = new SqlCommand(query, connection))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@RoleID", rol.RolID);
-                    command.Parameters.AddWithValue("@Nombre", rol.Nombre);
-                    command.Parameters.AddWithValue("@Descripcion", rol.Descripcion);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    var query = "UPDATE Roles SET Nombre = @Nombre, Descripcion = @Descripcion WHERE RoleID = @RoleID";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@RoleID", rol.RolID);
+                        command.Parameters.AddWithValue("@Nombre", rol.NombreRol);
+                        command.Parameters.AddWithValue("@Descripcion", string.IsNullOrEmpty(rol.Descripcion) ? (object)DBNull.Value : rol.Descripcion);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el rol: " + ex.Message);
+            }
         }
+
         public void EliminarRol(int roleId)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
-                var query = "DELETE FROM Roles WHERE RoleID = @RoleID";
-                using (var command = new SqlCommand(query, connection))
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@RoleID", roleId);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    var query = "DELETE FROM Roles WHERE RoleID = @RoleID";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@RoleID", roleId);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar el rol: " + ex.Message);
+            }
         }
+
         public List<Rol> ObtenerRoles()
         {
             var roles = new List<Rol>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            try
             {
-                connection.Open();
-                var query = "SELECT * FROM Roles";
-                using (var command = new SqlCommand(query, connection))
-                using (var reader = command.ExecuteReader())
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    var query = "SELECT * FROM Roles ORDER BY Nombre";  // Añadido ORDER BY para mejorar el orden de los roles
+                    using (var command = new SqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
                     {
-                        roles.Add(new Rol
+                        while (reader.Read())
                         {
-                            RolID = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
-                        });
+                            roles.Add(new Rol
+                            {
+                                RolID = reader.GetInt32(0),
+                                NombreRol = reader.GetString(1),
+                                Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
+                            });
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener los roles: " + ex.Message);
             }
 
             return roles;
         }
-
-
-
-       
     }
 }

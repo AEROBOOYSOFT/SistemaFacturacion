@@ -60,7 +60,7 @@ namespace SistemaFacturacion.USUARIOS
                 NombreUsuario = txtNombreUsuario.Text,
                 Email = txtEmailUsuario.Text,
                 Contraseña = txtPasswordUsuario.Password,
-                RolID = ((Rol)cbRoles.SelectedItem).RolID
+                RoleID = ((Rol)cbRoles.SelectedItem).RolID
             };
 
             try
