@@ -123,6 +123,9 @@
     <Compile Include="USUARIOS\GestionRoles.xaml.cs">
       <DependentUpon>GestionRoles.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\GestionUsuarios.xaml.cs">
+      <DependentUpon>GestionUsuarios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USUARIOS\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="USUARIOS\GestionRoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GestionUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
