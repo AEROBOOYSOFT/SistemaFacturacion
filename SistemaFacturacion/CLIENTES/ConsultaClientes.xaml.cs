@@ -91,6 +91,22 @@ namespace SistemaFacturacion.CLIENTES
             }
         }
 
+        private void TxtBuscar_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Buscar cliente...")
+            {
+                textBox.Text = string.Empty;
+            }
+        }
 
+        private void txtBuscar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Buscar cliente...")
+            {
+                textBox.Text = string.Empty;
+            }
+        }
     }
 }

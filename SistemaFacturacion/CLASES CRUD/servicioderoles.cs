@@ -16,21 +16,21 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+              ///  using (var connection = new SqlConnection(_connectionString))
                 {
-                    connection.Open();
+               //     connection.Open();
                     var query = "SELECT RolID, Nombre, Descripcion FROM Roles";
 
-                    using (var command = new SqlCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
+               //     using (var command = new SqlCommand(query, connection))
+                 //   using (var reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                   //     while (reader.Read())
                         {
                             roles.Add(new Rol
                             {
-                                RolID = reader.GetInt32(0),
-                                Nombre = reader.GetString(1),
-                                Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
+                      //          RolID = reader.GetInt32(0),
+                      //          Nombre = reader.GetString(1),
+                      //          Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
                             });
                         }
                     }
