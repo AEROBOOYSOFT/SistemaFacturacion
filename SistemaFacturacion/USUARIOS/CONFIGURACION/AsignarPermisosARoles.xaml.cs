@@ -22,7 +22,7 @@ namespace SistemaFacturacion.USUARIOS.CONFIGURACION
     /// 
     public partial class AsignarPermisosARoles : Window
     {
-        private readonly Servicioderoles _rolService;
+    private readonly Servicioderoles _rolService;
     private readonly PermisosService _permisoService;
     private List<PermisoAsignado> _permisosAsignados;
     private Rol _rolSeleccionado;
