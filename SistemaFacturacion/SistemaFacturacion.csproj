@@ -130,6 +130,7 @@
     <Compile Include="USUARIOS\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\SesionActual.cs" />
     <Page Include="CLIENTES\ClienteFormulario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -50,9 +50,12 @@ namespace SistemaFacturacion.USUARIOS
             // Validar las credenciales.
             if (ValidarUsuario(username, password))
             {
+                MessageBox.Show($"Bienvenido, {username}!", "Inicio de Sesión Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // Abrir la ventana principal.
                 this.Hide();
-                MainWindow frm = new MainWindow();
-                frm.Show();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
             }
             else
             {
@@ -79,20 +82,24 @@ namespace SistemaFacturacion.USUARIOS
 
                         var hashedPasswordFromDb = cmd.ExecuteScalar() as string;
 
-                        if (hashedPasswordFromDb != null)
+                        if (!string.IsNullOrEmpty(hashedPasswordFromDb))
                         {
                             // Comparar la contraseña hasheada.
                             return VerificarHash(password, hashedPasswordFromDb);
+                        }
+                        else
+                        {
+                            MessageBox.Show("El usuario no está activo o no existe.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show($"Error de conexión: {ex.Message}");
+                    MessageBox.Show($"Error de conexión con la base de datos: {ex.Message}", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error inesperado: {ex.Message}");
+                    MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
@@ -117,6 +124,7 @@ namespace SistemaFacturacion.USUARIOS
         }
     }
 }
+
 
 
 
