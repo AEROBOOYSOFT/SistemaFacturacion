@@ -55,24 +55,41 @@ namespace SistemaFacturacion.USUARIOS.CONFIGURACION
         // Agregar un nuevo rol
         private void BtnAgregarRol_Click(object sender, RoutedEventArgs e)
         {
-            var nuevoRol = new Rol { NombreRol = "Nuevo Rol" }; // Cambiar por una ventana para ingresar el nombre
+            var nuevoRol = new Rol { Nombre = "Nuevo Rol" }; // Cambiar por una ventana para ingresar el nombre
             _rolService.GuardarRol(nuevoRol);
             CargarRoles();
         }
 
         // Asignar permiso al rol
-        private void BtnAsignarPermiso_Click(object sender, RoutedEventArgs e)
-        {
+       private void BtnAsignarPermiso_Click(object sender, RoutedEventArgs e)
+{
             if (_rolSeleccionado == null)
             {
                 MessageBox.Show("Selecciona un rol primero.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var permiso = new Permiso { NombrePermiso = "Nuevo Permiso" }; // Cambiar por una selección real
-            _rolService.AsignarPermisoARol(_rolSeleccionado.RolID, permiso.PermisoID);
-            LbRoles_SelectionChanged(null, null);
+            // Verifica si hay permisos seleccionados
+            if (lbPermisos.SelectedItems.Count > 0)
+            {
+                // Construye una lista de PermisoIDs de los permisos seleccionados
+                List<int> permisosIDs = lbPermisos.SelectedItems
+                                                .Cast<Permiso>()  // Convierte los elementos seleccionados a tipo Permiso
+                                                .Select(p => p.PermisoID)  // Extrae el PermisoID
+                                                .ToList();  // Convierte a una lista de IDs
+
+                // Asigna los permisos seleccionados al rol
+                _rolService.AsignarPermisosARol(_rolSeleccionado.RolID, permisosIDs);
+
+                // Actualiza la lista de permisos del rol seleccionado
+                LbRoles_SelectionChanged(null, null);
+            }
+            else
+            {
+                MessageBox.Show("Selecciona al menos un permiso para asignar.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
+
 
         // Quitar permiso del rol
         private void BtnQuitarPermiso_Click(object sender, RoutedEventArgs e)

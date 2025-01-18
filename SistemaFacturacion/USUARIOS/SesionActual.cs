@@ -22,7 +22,7 @@ namespace SistemaFacturacion.CLASES
                 return false;
 
             // Verifica si el nombre del rol coincide con alguno de los roles del usuario
-            return Usuario.Roles.Any(r => r.NombreRol == rol);
+            return Usuario.Roles.Any(r => r.Nombre == rol);
         }
 
         // Verificar si el usuario tiene un permiso específico

@@ -29,7 +29,7 @@ namespace SistemaFacturacion.CLASES
                     {
                         command.Parameters.AddWithValue("@UsuarioID", usuarioID);
                         command.Parameters.AddWithValue("@Accion", accion);
-                        command.Parameters.AddWithValue("@Detalles", detalles);
+                        command.Parameters.AddWithValue("@Detalles", detalles);             
                         command.ExecuteNonQuery();
                     }
                 }

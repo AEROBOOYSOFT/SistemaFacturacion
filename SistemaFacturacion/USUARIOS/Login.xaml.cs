@@ -122,6 +122,11 @@ namespace SistemaFacturacion.USUARIOS
             string hashedInput = GenerarHash(password);
             return hashedInput == hashedPassword;
         }
+
+        private void ResetPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
