@@ -131,6 +131,9 @@
     <Compile Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml.cs">
       <DependentUpon>ConfiguracionRoles.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\CrearUsuario.xaml.cs">
+      <DependentUpon>CrearUsuario.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USUARIOS\GESTIONES CRUD\GestionPermisos.xaml.cs">
       <DependentUpon>GestionPermisos.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\CrearUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

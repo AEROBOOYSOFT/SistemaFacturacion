@@ -127,6 +127,14 @@ namespace SistemaFacturacion.USUARIOS
         {
 
         }
+
+        private void btnCrearUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            // Crear una nueva instancia de la ventana CrearUsuario
+            CrearUsuario crearUsuarioWindow = new CrearUsuario();
+            crearUsuarioWindow.Show(); // Mostrar la ventana de registro
+            this.Hide(); // Ocultar la ventana de login
+        }
     }
 }
 
