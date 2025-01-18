@@ -9,16 +9,26 @@ namespace SistemaFacturacion.CLASES
     public class Rol
     {
         public int RolID { get; set; }
-        public string NombreRol { get; set; }
+        public string Nombre { get; set; }
         public string Descripcion { get; set; }
 
-        public Rol() { }
+        // Lista de permisos asociados a este rol
+        public List<Permiso> Permisos { get; set; }
 
-        public Rol(int roleId, string nombre, string descripcion)
+        // Constructor por defecto
+        public Rol()
         {
-            RolID = roleId;
-            NombreRol = nombre;
+            Permisos = new List<Permiso>(); // Inicializamos la lista de permisos
+        }
+
+        // Constructor con parámetros
+        public Rol(int rolId, string nombre, string descripcion)
+        {
+            RolID = rolId;
+            Nombre = nombre;
             Descripcion = descripcion;
+            Permisos = new List<Permiso>(); // Inicializamos la lista de permisos
         }
     }
 }
+

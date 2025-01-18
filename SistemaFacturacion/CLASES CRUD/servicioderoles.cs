@@ -36,7 +36,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                             roles.Add(new Rol
                             {
                                 RolID = reader.GetInt32(0),
-                                NombreRol = reader.GetString(1),
+                                Nombre = reader.GetString(1),
                                 Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2)
                             });
                         }
@@ -65,7 +65,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                     using (var command = new SqlCommand(query, connection))
                     {
                         // Asignar parámetros
-                        command.Parameters.Add(new SqlParameter("@Nombre", rol.NombreRol));
+                        command.Parameters.Add(new SqlParameter("@Nombre", rol.Nombre));
                         command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(rol.Descripcion) ? (object)DBNull.Value : rol.Descripcion));
 
                         command.ExecuteNonQuery();
@@ -90,7 +90,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@Nombre", rol.NombreRol));
+                        command.Parameters.Add(new SqlParameter("@Nombre", rol.Nombre));
                         command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(rol.Descripcion) ? (object)DBNull.Value : rol.Descripcion));
                         command.Parameters.Add(new SqlParameter("@RolID", rol.RolID));
 

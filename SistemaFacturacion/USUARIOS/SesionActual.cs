@@ -1,49 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
-namespace SistemaFacturacion.USUARIOS
+using SistemaFacturacion.CLASES_CRUD;
+using SistemaFacturacion;
+namespace SistemaFacturacion.CLASES
 {
-    // Clase para representar un Permiso
-    public class Permiso
-    {
-        public string NombrePermiso { get; set; }
-    }
-
-   
-
-    // Clase estática para manejar la sesión actual
     public static class SesionActual
     {
         // Usuario actual en la sesión
         public static Usuario Usuario { get; set; }
 
+        // Método para cerrar sesión
         public static void CerrarSesion()
         {
             Usuario = null;  // Reseteamos el objeto Usuario
         }
 
-        // Verificar si el usuario tiene el rol indicado
+        // Verificar si el usuario tiene un rol indicado
         public static bool TieneRol(string rol)
         {
-            if (Usuario == null || Usuario.Permisos == null)
+            if (Usuario == null || Usuario.Roles == null)
                 return false;
 
-            // Puedes cambiar la lógica si quieres verificar los roles de alguna manera.
-            // Aquí se verifica si el nombre del permiso coincide con el rol
-            return Usuario.Permisos.Any(p => p.NombrePermiso == rol);
+            // Verifica si el nombre del rol coincide con alguno de los roles del usuario
+            return Usuario.Roles.Any(r => r.NombreRol == rol);
         }
 
-        // Método para verificar permisos a través de un nombre
+        // Verificar si el usuario tiene un permiso específico
         public static bool TienePermiso(string nombrePermiso)
         {
-            if (Usuario == null || Usuario.Permisos == null)
+            if (Usuario == null || Usuario.Roles == null)
                 return false;
 
-            // Verifica si el usuario tiene un permiso con el nombre indicado
-            return Usuario.Permisos.Any(p => p.NombrePermiso == nombrePermiso);
+            // Verifica si el usuario tiene el permiso a través de alguno de sus roles
+            foreach (var rol in Usuario.Roles)
+            {
+                if (rol.Permisos.Any(p => p.NombrePermiso == nombrePermiso))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
