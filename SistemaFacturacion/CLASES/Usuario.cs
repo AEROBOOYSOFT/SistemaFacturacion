@@ -18,7 +18,7 @@ namespace SistemaFacturacion.CLASES
         public int RoleID { get; internal set; }
         public Rol Rol { get; internal set; }
         public List<Rol> Roles { get; set; } // Lista de roles del usuario
-
+        public List<Permiso> Permisos { get; set; }
         public Usuario() { }
 
         public Usuario(int usuarioId, string nombreCompleto, string email, string nombreUsuario, string contraseña, bool activo, DateTime fechaCreacion)

@@ -189,5 +189,43 @@ namespace SistemaFacturacion.CLASES_CRUD
             return permisos;
         }
 
+
+        public void AsignarPermisosARol(int rolID, List<int> permisosIDs)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    // Eliminar permisos actuales del rol
+                    var deleteQuery = "DELETE FROM RolPermiso WHERE RolID = @RolID";
+                    using (var deleteCommand = new SqlCommand(deleteQuery, connection))
+                    {
+                        deleteCommand.Parameters.AddWithValue("@RolID", rolID);
+                        deleteCommand.ExecuteNonQuery();
+                    }
+
+                    // Insertar los nuevos permisos
+                    var insertQuery = "INSERT INTO RolPermiso (RolID, PermisoID) VALUES (@RolID, @PermisoID)";
+                    foreach (var permisoID in permisosIDs)
+                    {
+                        using (var insertCommand = new SqlCommand(insertQuery, connection))
+                        {
+                            insertCommand.Parameters.AddWithValue("@RolID", rolID);
+                            insertCommand.Parameters.AddWithValue("@PermisoID", permisoID);
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al asignar permisos al rol: " + ex.Message);
+            }
+        }
+
+
+
     }
 }

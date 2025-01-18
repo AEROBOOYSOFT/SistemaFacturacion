@@ -129,27 +129,38 @@ namespace SistemaFacturacion.CLASES_CRUD
         }
 
         // Asignar permisos a un rol
-        public void AsignarPermisoARol(int rolId, int permisoId)
+        public void AsignarPermisosARol(int rolID, List<int> permisosIDs)
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "INSERT INTO RolPermiso (RolID, PermisoID) VALUES (@RolID, @PermisoID)";
 
-                    using (var command = new SqlCommand(query, connection))
+                    // Eliminar permisos actuales del rol
+                    var deleteQuery = "DELETE FROM RolPermiso WHERE RolID = @RolID";
+                    using (var deleteCommand = new SqlCommand(deleteQuery, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@RolID", rolId));
-                        command.Parameters.Add(new SqlParameter("@PermisoID", permisoId));
+                        deleteCommand.Parameters.AddWithValue("@RolID", rolID);
+                        deleteCommand.ExecuteNonQuery();
+                    }
 
-                        command.ExecuteNonQuery();
+                    // Insertar los nuevos permisos
+                    var insertQuery = "INSERT INTO RolPermiso (RolID, PermisoID) VALUES (@RolID, @PermisoID)";
+                    foreach (var permisoID in permisosIDs)
+                    {
+                        using (var insertCommand = new SqlCommand(insertQuery, connection))
+                        {
+                            insertCommand.Parameters.AddWithValue("@RolID", rolID);
+                            insertCommand.Parameters.AddWithValue("@PermisoID", permisoID);
+                            insertCommand.ExecuteNonQuery();
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al asignar permiso al rol: " + ex.Message);
+                throw new Exception("Error al asignar permisos al rol: " + ex.Message);
             }
         }
 

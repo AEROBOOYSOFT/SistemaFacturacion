@@ -81,8 +81,10 @@
     <Compile Include="CLASES CRUD\UsuarioRoles.cs" />
     <Compile Include="CLASES CRUD\Usuarioscrud.cs" />
     <Compile Include="CLASES CRUD\UsuarioService.cs" />
+    <Compile Include="CLASES\AuditoriaServicio.cs" />
     <Compile Include="CLASES\Cliente.cs" />
     <Compile Include="CLASES\Configuracion.cs" />
+    <Compile Include="CLASES\ControlPermisos.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
     <Compile Include="CLASES\Permiso.cs" />
@@ -132,7 +134,7 @@
     <Compile Include="USUARIOS\GestionPermisos.xaml.cs">
       <DependentUpon>GestionPermisos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="USUARIOS\GestionRoles.xaml.cs">
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionRoles.xaml.cs">
       <DependentUpon>GestionRoles.xaml</DependentUpon>
     </Compile>
     <Compile Include="USUARIOS\GestionUsuarios.xaml.cs">
@@ -194,7 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="USUARIOS\GestionRoles.xaml">
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionRoles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
