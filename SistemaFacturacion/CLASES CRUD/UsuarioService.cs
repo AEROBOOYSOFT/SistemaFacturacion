@@ -63,7 +63,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                                 usuario.Roles.Add(new Rol
                                 {
                                     RolID = reader.GetInt32(6),
-                                    NombreRol = reader.GetString(7)
+                                    Nombre = reader.GetString(7)
                                 });
                             }
                         }

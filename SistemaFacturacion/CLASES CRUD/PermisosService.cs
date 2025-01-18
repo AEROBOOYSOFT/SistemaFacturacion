@@ -25,7 +25,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "SELECT PermisoID, Nombre, Descripcion FROM Permisos";
+                    var query = "SELECT PermisoID, NombrePermiso, Descripcion FROM Permiso";
 
                     using (var command = new SqlCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -58,11 +58,11 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "INSERT INTO Permisos (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
+                    var query = "INSERT INTO Permiso (NombrePermiso, Descripcion) VALUES (@NombrePermiso, @Descripcion)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@Nombre", permiso.NombrePermiso));
+                        command.Parameters.Add(new SqlParameter("@NombrePermiso", permiso.NombrePermiso));
                         command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(permiso.Descripcion) ? (object)DBNull.Value : permiso.Descripcion));
 
                         command.ExecuteNonQuery();
@@ -83,11 +83,11 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "UPDATE Permisos SET Nombre = @Nombre, Descripcion = @Descripcion WHERE PermisoID = @PermisoID";
+                    var query = "UPDATE Permisos SET NombrePermiso = @NombrePermiso, Descripcion = @Descripcion WHERE PermisoID = @PermisoID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.Add(new SqlParameter("@Nombre", permiso.NombrePermiso));
+                        command.Parameters.Add(new SqlParameter("@NombrePermiso", permiso.NombrePermiso));
                         command.Parameters.Add(new SqlParameter("@Descripcion", string.IsNullOrEmpty(permiso.Descripcion) ? (object)DBNull.Value : permiso.Descripcion));
                         command.Parameters.Add(new SqlParameter("@PermisoID", permiso.PermisoID));
 
@@ -158,7 +158,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "SELECT p.PermisoID, p.Nombre, p.Descripcion FROM Permisos p " +
+                    var query = "SELECT p.PermisoID, p.NombrePermiso, p.Descripcion FROM Permisos p " +
                                 "INNER JOIN RolPermiso rp ON p.PermisoID = rp.PermisoID " +
                                 "WHERE rp.RolID = @RolID";
 
