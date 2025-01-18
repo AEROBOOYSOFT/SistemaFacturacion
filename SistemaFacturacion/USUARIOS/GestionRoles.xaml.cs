@@ -50,7 +50,7 @@ namespace SistemaFacturacion.USUARIOS
 
             try
             {
-               _rolService.GuardarRol(nuevoRol);
+                _Servicioderoles.GuardarRol(nuevoRol);
                 MessageBox.Show("Rol guardado con éxito.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
                 CargarRoles();
                 txtNombreRol.Clear();

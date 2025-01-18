@@ -1,4 +1,5 @@
 ﻿using SistemaFacturacion.CLASES;
+using SistemaFacturacion.CLASES_CRUD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,13 @@ namespace SistemaFacturacion.USUARIOS
     public partial class GestionUsuarios : Window
     {
         private UsuarioService _usuarioService;
-        private RolService _rolService;
+        private Servicioderoles _rolService;
 
         public GestionUsuarios()
         {
             InitializeComponent();
             _usuarioService = new UsuarioService();
-            _rolService = new RolService();
+            _rolService = new Servicioderoles();
             CargarUsuarios();
             CargarRoles();
         }
@@ -58,7 +59,7 @@ namespace SistemaFacturacion.USUARIOS
             {
                 NombreUsuario = txtNombreUsuario.Text,
                 Email = txtEmailUsuario.Text,
-                Password = txtPasswordUsuario.Password,
+                Contraseña = txtPasswordUsuario.Password,
                 RolID = ((Rol)cbRoles.SelectedItem).RolID
             };
 

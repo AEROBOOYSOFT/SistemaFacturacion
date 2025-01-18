@@ -15,6 +15,8 @@ namespace SistemaFacturacion.CLASES
         public string Contraseña { get; set; } // Almacenar encriptada
         public bool Activo { get; set; }
         public DateTime FechaCreacion { get; set; }
+        public int RolID { get; internal set; }
+        public Rol Rol { get; internal set; }
 
         public Usuario() { }
 

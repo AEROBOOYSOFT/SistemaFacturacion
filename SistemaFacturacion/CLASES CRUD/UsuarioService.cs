@@ -67,14 +67,14 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = @"INSERT INTO Usuarios (NombreUsuario, Email, Password, RolID) 
+                    var query = @"INSERT INTO Usuarios (NombreUsuario, Email, Contraseña, RolID) 
                           VALUES (@NombreUsuario, @Email, @Password, @RolID)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
                         command.Parameters.Add(new SqlParameter("@NombreUsuario", usuario.NombreUsuario));
                         command.Parameters.Add(new SqlParameter("@Email", usuario.Email));
-                        command.Parameters.Add(new SqlParameter("@Password", usuario.Password));
+                        command.Parameters.Add(new SqlParameter("@Password", usuario.Contraseña));
                         command.Parameters.Add(new SqlParameter("@RolID", usuario.RolID));
                         command.ExecuteNonQuery();
                     }
