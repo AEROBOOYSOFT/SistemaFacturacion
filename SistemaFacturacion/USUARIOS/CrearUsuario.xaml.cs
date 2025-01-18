@@ -95,7 +95,7 @@ namespace SistemaFacturacion.USUARIOS
                 }
             }
         }
-        // Método para hashear una contraseña.
+       
        
     }
 }
