@@ -3,17 +3,30 @@ using SistemaFacturacion.CLASES_CRUD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
-namespace SistemaFacturacion.USUARIOS
+namespace SistemaFacturacion.USUARIOS.CONFIGURACION
 {
+    /// <summary>
+    /// Lógica de interacción para AsignarPermisosARoles.xaml
+    /// </summary>
+    /// 
     public partial class AsignarPermisosARoles : Window
     {
         private readonly Servicioderoles _rolService;
-        private readonly PermisosService _permisoService;
-        private List<PermisoAsignado> _permisosAsignados;
-        private Rol _rolSeleccionado;
-
+    private readonly PermisosService _permisoService;
+    private List<PermisoAsignado> _permisosAsignados;
+    private Rol _rolSeleccionado;
+  
         public AsignarPermisosARoles()
         {
             InitializeComponent();
@@ -21,7 +34,6 @@ namespace SistemaFacturacion.USUARIOS
             _permisoService = new PermisosService();
             CargarRoles();
         }
-
         // Cargar los roles en el ComboBox
         private void CargarRoles()
         {

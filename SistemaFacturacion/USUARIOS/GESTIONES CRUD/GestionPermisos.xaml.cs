@@ -3,7 +3,7 @@ using SistemaFacturacion.CLASES_CRUD;
 using System;
 using System.Windows;
 
-namespace SistemaFacturacion.USUARIOS
+namespace SistemaFacturacion.USUARIOS.GESTIONES_CRUD
 {
     public partial class GestionPermisos : Window
     {

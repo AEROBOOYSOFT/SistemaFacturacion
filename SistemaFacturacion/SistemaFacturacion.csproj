@@ -125,19 +125,19 @@
     <Compile Include="PRODUCTOS\ProductoFormulario.xaml.cs">
       <DependentUpon>ProductoFormulario.xaml</DependentUpon>
     </Compile>
-    <Compile Include="USUARIOS\AsignarPermisosARoles.xaml.cs">
+    <Compile Include="USUARIOS\CONFIGURACION\AsignarPermisosARoles.xaml.cs">
       <DependentUpon>AsignarPermisosARoles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="USUARIOS\ConfiguracionRoles.xaml.cs">
+    <Compile Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml.cs">
       <DependentUpon>ConfiguracionRoles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="USUARIOS\GestionPermisos.xaml.cs">
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionPermisos.xaml.cs">
       <DependentUpon>GestionPermisos.xaml</DependentUpon>
     </Compile>
     <Compile Include="USUARIOS\GESTIONES CRUD\GestionRoles.xaml.cs">
       <DependentUpon>GestionRoles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="USUARIOS\GestionUsuarios.xaml.cs">
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionUsuarios.xaml.cs">
       <DependentUpon>GestionUsuarios.xaml</DependentUpon>
     </Compile>
     <Compile Include="USUARIOS\Login.xaml.cs">
@@ -184,15 +184,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="USUARIOS\AsignarPermisosARoles.xaml">
+    <Page Include="USUARIOS\CONFIGURACION\AsignarPermisosARoles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="USUARIOS\ConfiguracionRoles.xaml">
+    <Page Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="USUARIOS\GestionPermisos.xaml">
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionPermisos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="USUARIOS\GestionUsuarios.xaml">
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

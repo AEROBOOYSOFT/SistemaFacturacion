@@ -2,7 +2,6 @@
 using SistemaFacturacion.CLASES_CRUD;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SistemaFacturacion.USUARIOS
+namespace SistemaFacturacion.USUARIOS.GESTIONES_CRUD
 {
     /// <summary>
     /// Lógica de interacción para GestionRoles.xaml
@@ -66,7 +65,7 @@ namespace SistemaFacturacion.USUARIOS
         {
             this.Close();
         }
-      
+
 
     }
 
