@@ -52,7 +52,7 @@ namespace SistemaFacturacion.USUARIOS
             string connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
 
             // Generar hash de la contraseña.
-            string hashedPassword = GenerarHash(password);
+            
 
             // Fecha de creación: Obtener la fecha y hora actuales
             DateTime fechaCreacion = DateTime.Now;
@@ -75,7 +75,7 @@ namespace SistemaFacturacion.USUARIOS
                         cmd.Parameters.AddWithValue("@NombreCompleto", nombreCompleto);
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@NombreUsuario", username);
-                        cmd.Parameters.AddWithValue("@Contraseña", hashedPassword);
+                        cmd.Parameters.AddWithValue("@Contraseña", password);
                         cmd.Parameters.AddWithValue("@FechaCreacion", fechaCreacion);
                         cmd.Parameters.AddWithValue("@RoleID", roleID ?? (object)DBNull.Value); // Si RoleID es null, se pasa DBNull
 
@@ -96,20 +96,6 @@ namespace SistemaFacturacion.USUARIOS
             }
         }
         // Método para hashear una contraseña.
-        private string GenerarHash(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
-
-        // Método para verificar un hash.
-        private bool VerificarHash(string password, string hashedPassword)
-        {
-            string hashedInput = GenerarHash(password);
-            return hashedInput == hashedPassword;
-        }
+       
     }
 }

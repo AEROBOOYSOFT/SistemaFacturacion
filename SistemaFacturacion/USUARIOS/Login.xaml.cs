@@ -2,7 +2,6 @@
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -80,12 +79,12 @@ namespace SistemaFacturacion.USUARIOS
                     {
                         cmd.Parameters.AddWithValue("@NombreUsuario", username);
 
-                        var hashedPasswordFromDb = cmd.ExecuteScalar() as string;
+                        var passwordFromDb = cmd.ExecuteScalar() as string;
 
-                        if (!string.IsNullOrEmpty(hashedPasswordFromDb))
+                        if (!string.IsNullOrEmpty(passwordFromDb))
                         {
-                            // Comparar la contraseña hasheada.
-                            return VerificarHash(password, hashedPasswordFromDb);
+                            // Comparar la contraseña en texto claro (sin hash).
+                            return password == passwordFromDb;
                         }
                         else
                         {
@@ -106,26 +105,9 @@ namespace SistemaFacturacion.USUARIOS
             return false;
         }
 
-        // Método para hashear una contraseña.
-        private string GenerarHash(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
-        }
-
-        // Método para verificar un hash.
-        private bool VerificarHash(string password, string hashedPassword)
-        {
-            string hashedInput = GenerarHash(password);
-            return hashedInput == hashedPassword;
-        }
-
         private void ResetPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            // Lógica para restablecer la contraseña si es necesario.
         }
 
         private void btnCrearUsuario_Click(object sender, RoutedEventArgs e)
@@ -137,8 +119,3 @@ namespace SistemaFacturacion.USUARIOS
         }
     }
 }
-
-
-
-
-
