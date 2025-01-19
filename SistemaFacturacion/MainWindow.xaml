@@ -7,25 +7,35 @@
         mc:Ignorable="d"
         Title="Sistema de Facturación" Height="450" Width="800">
     <Grid>
-        <!-- Botón para abrir la ventana de consulta de clientes -->
+        <!-- Menú en la parte superior -->
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="Usuarios" Click="MenuItem_Click">
+                <MenuItem Header="Gestionar Usuarios" Click="MenuItemGestionUsuarios_Click"/>
+            </MenuItem>
+            <MenuItem Header="Roles" Click="MenuItem_Click_1">
+                <MenuItem Header="Gestionar Roles" Click="MenuItemGestionRoles_Click"/>
+            </MenuItem>
+            <MenuItem Header="Permisos" Click="MenuItem_Click_2">
+                <MenuItem Header="Asignar Permisos a Roles" Click="MenuItemAsignarPermisos_Click"/>
+                <MenuItem Header="Gestionar Permisos" Click="MenuItemGestionPermisos_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Botones debajo del Menú -->
         <Button Content="Consulta Clientes" Width="156" Height="40" 
                 Click="AbrirConsultaClientes_Click" 
-                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,40,0,0"/>
 
-        <!-- Botón para abrir la ventana de consulta de productos -->
         <Button Content="Consulta Productos" Width="156" Height="40" 
                 Click="AbrirConsultaProductos_Click" 
-                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="171,10,0,0"/>
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="171,40,0,0"/>
 
-        <!-- Botón para abrir la ventana de registro de facturas -->
         <Button Content="Registro Facturas" Width="156" Height="40" 
                 Click="AbrirRegistroFacturas_Click" 
-                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="332,10,0,0"/>
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="332,40,0,0"/>
 
-        <!-- Botón para abrir la ventana de consulta de facturas -->
         <Button Content="Consulta Facturas" Width="156" Height="40" 
                 Click="AbrirConsultaFacturas_Click" 
-                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="493,10,0,0"/>
+                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="493,40,0,0"/>
     </Grid>
 </Window>
-

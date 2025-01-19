@@ -1,6 +1,8 @@
 ﻿using SistemaFacturacion.CLIENTES;
 using SistemaFacturacion.FACTURACION;
 using SistemaFacturacion.PRODUCTOS;
+using SistemaFacturacion.USUARIOS.CONFIGURACION;
+using SistemaFacturacion.USUARIOS.GESTIONES_CRUD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,5 +67,48 @@ namespace SistemaFacturacion
             consultaFacturas.ShowDialog();
         }
 
+       
+        private void MenuItemGestionUsuarios_Click(object sender, RoutedEventArgs e)
+        {
+            // Abre la ventana de Gestión de Usuarios
+            GestionUsuarios ventanaUsuarios = new GestionUsuarios();
+            ventanaUsuarios.Show();
+        }
+
+        private void MenuItemGestionRoles_Click(object sender, RoutedEventArgs e)
+        {
+            // Abre la ventana de Gestión de Roles
+            GestionRoles ventanaRoles = new GestionRoles();
+            ventanaRoles.Show();
+        }
+
+        private void MenuItemAsignarPermisos_Click(object sender, RoutedEventArgs e)
+        {
+            // Abre la ventana de Asignar Permisos a Roles
+            AsignarPermisosARoles ventanaPermisos = new AsignarPermisosARoles();
+            ventanaPermisos.Show();
+        }
+
+        private void MenuItemGestionPermisos_Click(object sender, RoutedEventArgs e)
+        {
+            // Abre la ventana de Gestión de Permisos
+            GestionPermisos ventanaPermisos = new GestionPermisos();
+            ventanaPermisos.Show();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
