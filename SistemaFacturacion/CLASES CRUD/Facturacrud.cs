@@ -112,31 +112,46 @@ namespace SistemaFacturacion.CLASES_CRUD
 
                         // Insertar detalles de la factura
                         string queryDetalle = @"
-                    INSERT INTO DetalleFactura (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal) 
-                    VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal)";
+    INSERT INTO DetalleFactura 
+    (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal, ImpuestoPorProducto, Descuento, TotalLinea, DescripcionProducto, Estado) 
+    VALUES 
+    (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal, @ImpuestoPorProducto, @Descuento, @TotalLinea, @DescripcionProducto, @Estado)";
 
                         using (SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, transaction))
                         {
-                            // Preparar parámetros
                             var paramFacturaID = new SqlParameter("@FacturaID", idFactura);
                             var paramProductoID = new SqlParameter("@ProductoID", SqlDbType.Int);
                             var paramCantidad = new SqlParameter("@Cantidad", SqlDbType.Int);
                             var paramPrecioUnitario = new SqlParameter("@PrecioUnitario", SqlDbType.Decimal);
                             var paramSubtotal = new SqlParameter("@Subtotal", SqlDbType.Decimal);
+                            var paramImpuestoPorProducto = new SqlParameter("@ImpuestoPorProducto", SqlDbType.Decimal);
+                            var paramDescuento = new SqlParameter("@Descuento", SqlDbType.Decimal);
+                            var paramTotalLinea = new SqlParameter("@TotalLinea", SqlDbType.Decimal);
+                            var paramDescripcionProducto = new SqlParameter("@DescripcionProducto", SqlDbType.NVarChar, 255);
+                            var paramEstado = new SqlParameter("@Estado", SqlDbType.TinyInt);
 
                             cmdDetalle.Parameters.Add(paramFacturaID);
                             cmdDetalle.Parameters.Add(paramProductoID);
                             cmdDetalle.Parameters.Add(paramCantidad);
                             cmdDetalle.Parameters.Add(paramPrecioUnitario);
                             cmdDetalle.Parameters.Add(paramSubtotal);
+                            cmdDetalle.Parameters.Add(paramImpuestoPorProducto);
+                            cmdDetalle.Parameters.Add(paramDescuento);
+                            cmdDetalle.Parameters.Add(paramTotalLinea);
+                            cmdDetalle.Parameters.Add(paramDescripcionProducto);
+                            cmdDetalle.Parameters.Add(paramEstado);
 
-                            // Insertar cada detalle
                             foreach (var detalle in factura.Detalles)
                             {
                                 paramProductoID.Value = detalle.IdProducto;
                                 paramCantidad.Value = detalle.Cantidad;
                                 paramPrecioUnitario.Value = detalle.PrecioUnitario;
                                 paramSubtotal.Value = detalle.Subtotal;
+                                paramImpuestoPorProducto.Value = detalle.ImpuestoPorProducto;
+                                paramDescuento.Value = detalle.Descuento;
+                                paramTotalLinea.Value = detalle.TotalLinea;
+                                paramDescripcionProducto.Value = detalle.DescripcionProducto ?? (object)DBNull.Value;
+                                paramEstado.Value = detalle.Estado;
 
                                 cmdDetalle.ExecuteNonQuery();
                             }
