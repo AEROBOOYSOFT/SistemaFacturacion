@@ -22,6 +22,7 @@ namespace SistemaFacturacion.FACTURACION
     /// </summary>
     public partial class RegistroFacturas : Window
     {
+        private Factura facturaActual;
         private List<DetalleFactura> detalleFactura;
         private decimal total;
         public RegistroFacturas()
@@ -31,7 +32,7 @@ namespace SistemaFacturacion.FACTURACION
             total = 0;
             CargarClientes();
             CargarProductos();
-
+        
         }
         private void CargarClientes()
         {
