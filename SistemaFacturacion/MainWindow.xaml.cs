@@ -1,22 +1,10 @@
 ﻿using SistemaFacturacion.CLIENTES;
 using SistemaFacturacion.FACTURACION;
 using SistemaFacturacion.PRODUCTOS;
-using SistemaFacturacion.USUARIOS.CONFIGURACION;
+using SistemaFacturacion.USUARIOS.CONFIGURACION;  // Asegúrate de que este espacio de nombres esté incluido
 using SistemaFacturacion.USUARIOS.GESTIONES_CRUD;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SistemaFacturacion
 {
@@ -29,6 +17,7 @@ namespace SistemaFacturacion
         {
             InitializeComponent();
         }
+
         // Evento para abrir ClienteFormulario
         private void AbrirClienteFormulario_Click(object sender, RoutedEventArgs e)
         {
@@ -36,13 +25,9 @@ namespace SistemaFacturacion
             ventanaCliente.ShowDialog();  // Mostrar la ventana como un cuadro de diálogo modal
         }
 
-
-
         // Evento para abrir la ventana de consulta de clientes
         private void AbrirConsultaClientes_Click(object sender, RoutedEventArgs e)
         {
-            // Lógica para abrir la ventana de consulta de clientes
-            // Aquí deberías abrir tu ventana de clientes (ejemplo con ConsultaClientes)
             ConsultaClientes ventanaClientes = new ConsultaClientes();
             ventanaClientes.ShowDialog();
         }
@@ -50,10 +35,10 @@ namespace SistemaFacturacion
         // Evento para abrir la ventana de consulta de productos
         private void AbrirConsultaProductos_Click(object sender, RoutedEventArgs e)
         {
-            // Lógica para abrir la ventana de consulta de productos
             ConsultaProductos ventanaProductos = new ConsultaProductos();
             ventanaProductos.ShowDialog();
         }
+
         private void AbrirRegistroFacturas_Click(object sender, RoutedEventArgs e)
         {
             var registroFacturas = new RegistroFacturas();
@@ -67,35 +52,36 @@ namespace SistemaFacturacion
             consultaFacturas.ShowDialog();
         }
 
-       
-        private void MenuItemGestionUsuarios_Click(object sender, RoutedEventArgs e)
+        private void AbrirGestionUsuarios_Click(object sender, RoutedEventArgs e)
         {
-            // Abre la ventana de Gestión de Usuarios
-            GestionUsuarios ventanaUsuarios = new GestionUsuarios();
-            ventanaUsuarios.Show();
+            var gestionUsuarios = new SistemaFacturacion.USUARIOS.GESTIONES_CRUD.GestionUsuarios();
+            gestionUsuarios.Show();
         }
 
-        private void MenuItemGestionRoles_Click(object sender, RoutedEventArgs e)
+        private void AbrirGestionRoles_Click(object sender, RoutedEventArgs e)
         {
-            // Abre la ventana de Gestión de Roles
-            GestionRoles ventanaRoles = new GestionRoles();
-            ventanaRoles.Show();
+            var gestionRoles = new SistemaFacturacion.USUARIOS.GESTIONES_CRUD.GestionRoles();
+            gestionRoles.Show();
         }
 
-        private void MenuItemAsignarPermisos_Click(object sender, RoutedEventArgs e)
+        private void AbrirGestionPermisos_Click(object sender, RoutedEventArgs e)
         {
-            // Abre la ventana de Asignar Permisos a Roles
-            AsignarPermisosARoles ventanaPermisos = new AsignarPermisosARoles();
-            ventanaPermisos.Show();
+            var gestionPermisos = new SistemaFacturacion.USUARIOS.GESTIONES_CRUD.GestionPermisos();
+            gestionPermisos.Show();
         }
 
-        private void MenuItemGestionPermisos_Click(object sender, RoutedEventArgs e)
+        private void AbrirConfiguracionRoles_Click(object sender, RoutedEventArgs e)
         {
-            // Abre la ventana de Gestión de Permisos
-            GestionPermisos ventanaPermisos = new GestionPermisos();
-            ventanaPermisos.Show();
+            var configuracionRoles = new SistemaFacturacion.USUARIOS.CONFIGURACION.ConfiguracionRoles();
+            configuracionRoles.Show();
         }
 
-       
+        private void AbrirAsignarPermisos_Click(object sender, RoutedEventArgs e)
+        {
+            var asignarPermisos = new SistemaFacturacion.USUARIOS.CONFIGURACION.AsignarPermisosARoles();
+            asignarPermisos.Show();
+        }
+
     }
 }
+

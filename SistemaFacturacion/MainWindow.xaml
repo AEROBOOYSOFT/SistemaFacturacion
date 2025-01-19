@@ -9,16 +9,11 @@
     <Grid>
         <!-- Menú en la parte superior -->
         <Menu VerticalAlignment="Top">
-            <MenuItem Header="Usuarios">
-                <MenuItem Header="Gestionar Usuarios" Click="MenuItemGestionUsuarios_Click"/>
-            </MenuItem>
-            <MenuItem Header="Roles">
-                <MenuItem Header="Gestionar Roles" Click="MenuItemGestionRoles_Click"/>
-            </MenuItem>
-            <MenuItem Header="Permisos">
-                <MenuItem Header="Asignar Permisos a Roles" Click="MenuItemAsignarPermisos_Click"/>
-                <MenuItem Header="Gestionar Permisos" Click="MenuItemGestionPermisos_Click"/>
-            </MenuItem>
+            <MenuItem Header="Gestión de Usuarios" Click="AbrirGestionUsuarios_Click"/>
+            <MenuItem Header="Gestión de Roles" Click="AbrirGestionRoles_Click"/>
+            <MenuItem Header="Gestión de Permisos" Click="AbrirGestionPermisos_Click"/>
+            <MenuItem Header="Configuración Roles y Permisos" Click="AbrirConfiguracionRoles_Click"/>
+            <MenuItem Header="Asignar Permisos a Roles" Click="AbrirAsignarPermisos_Click"/>
         </Menu>
 
         <!-- Botones debajo del Menú -->
