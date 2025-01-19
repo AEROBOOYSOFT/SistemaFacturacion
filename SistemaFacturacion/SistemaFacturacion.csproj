@@ -87,6 +87,7 @@
     <Compile Include="CLASES\ControlPermisos.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
+    <Compile Include="CLASES\MovimientoInventario.cs" />
     <Compile Include="CLASES\Permiso.cs" />
     <Compile Include="CLASES\Producto.cs" />
     <Compile Include="CLASES\Rol.cs" />
@@ -106,6 +107,9 @@
     </Compile>
     <Compile Include="FACTURACION\RegistroFacturas.xaml.cs">
       <DependentUpon>RegistroFacturas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="INVENTARIO\ConsultaMovimientosInventario.xaml.cs">
+      <DependentUpon>ConsultaMovimientosInventario.xaml</DependentUpon>
     </Compile>
     <Compile Include="PRODUCTOS\Categoria.cs">
       <SubType>Form</SubType>
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FACTURACION\RegistroFacturas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="INVENTARIO\ConsultaMovimientosInventario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

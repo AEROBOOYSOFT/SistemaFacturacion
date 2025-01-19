@@ -192,31 +192,68 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <!-- Total -->
+                <!-- Total, Subtotal y Impuestos -->
                 <StackPanel Grid.Row="2" 
-                          Orientation="Horizontal" 
+                          Orientation="Vertical" 
                           HorizontalAlignment="Right">
-                    <TextBlock Text="Total:" 
-                             FontWeight="SemiBold"
-                             FontSize="16"
-                             VerticalAlignment="Center"
-                             Margin="0,0,20,0"/>
-                    <TextBox x:Name="txtTotal" 
-                            Width="200"
-                            Height="40"
-                            Padding="8,8"
-                            IsReadOnly="True"
-                            Background="#E3F2FD"
-                            BorderBrush="#2196F3"
-                            BorderThickness="2"
-                            FontWeight="Bold"
-                            FontSize="16">
-                        <TextBox.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="4"/>
-                            </Style>
-                        </TextBox.Resources>
-                    </TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Total:" 
+                                 FontWeight="SemiBold"
+                                 FontSize="16"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,20,0"/>
+                        <TextBox x:Name="txtTotal" 
+                                 Width="200"
+                                 Height="40"
+                                 Padding="8,8"
+                                 IsReadOnly="True"
+                                 Background="#E3F2FD"
+                                 BorderBrush="#2196F3"
+                                 BorderThickness="2"
+                                 FontWeight="Bold"
+                                 FontSize="16">
+                            <TextBox.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+                    </StackPanel>
+                    <!-- Agregar el Subtotal y los Impuestos -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Subtotal:" 
+                                 FontWeight="SemiBold"
+                                 FontSize="16"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,20,0"/>
+                        <TextBox x:Name="txtSubtotal" 
+                                 Width="200"
+                                 Height="40"
+                                 Padding="8,8"
+                                 IsReadOnly="True"
+                                 Background="#E3F2FD"
+                                 BorderBrush="#2196F3"
+                                 BorderThickness="2"
+                                 FontWeight="Bold"
+                                 FontSize="16"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Impuestos:" 
+                                 FontWeight="SemiBold"
+                                 FontSize="16"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,20,0"/>
+                        <TextBox x:Name="txtImpuestos" 
+                                 Width="200"
+                                 Height="40"
+                                 Padding="8,8"
+                                 IsReadOnly="True"
+                                 Background="#E3F2FD"
+                                 BorderBrush="#2196F3"
+                                 BorderThickness="2"
+                                 FontWeight="Bold"
+                                 FontSize="16"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>

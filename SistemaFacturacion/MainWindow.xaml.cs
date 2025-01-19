@@ -81,6 +81,12 @@ namespace SistemaFacturacion
             var asignarPermisos = new SistemaFacturacion.USUARIOS.CONFIGURACION.AsignarPermisosARoles();
             asignarPermisos.Show();
         }
+        private void AbrirConsultaMovimientosInventario_Click(object sender, RoutedEventArgs e)
+        {
+            // Crear una nueva instancia de la ventana de consulta de movimientos de inventario
+            var ventanaConsultaInventario = new INVENTARIO.ConsultaMovimientosInventario();
+            ventanaConsultaInventario.Show(); // Mostrar la ventana
+        }
 
     }
 }

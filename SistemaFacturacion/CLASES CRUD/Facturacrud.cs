@@ -1,4 +1,5 @@
 ﻿using SistemaFacturacion.Clases;
+using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -164,6 +165,97 @@ namespace SistemaFacturacion.CLASES_CRUD
             }
 
             return factura;
+        }
+        public static void ActualizarStock(int productoId, int nuevoStock)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "UPDATE Productos SET Stock = @Stock WHERE ProductoID = @ProductoID";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Stock", nuevoStock);
+                    command.Parameters.AddWithValue("@ProductoID", productoId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+    
+    public static void RegistrarMovimiento(MovimientoInventario movimiento)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            var query = "INSERT INTO MovimientosInventario (ProductoID, TipoMovimiento, Cantidad, FechaMovimiento, Descripcion) " +
+                        "VALUES (@ProductoID, @TipoMovimiento, @Cantidad, @FechaMovimiento, @Descripcion)";
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ProductoID", movimiento.ProductoID);
+                command.Parameters.AddWithValue("@TipoMovimiento", movimiento.TipoMovimiento);
+                command.Parameters.AddWithValue("@Cantidad", movimiento.Cantidad);
+                command.Parameters.AddWithValue("@FechaMovimiento", movimiento.FechaMovimiento);
+                command.Parameters.AddWithValue("@Descripcion", string.IsNullOrEmpty(movimiento.Descripcion) ? (object)DBNull.Value : movimiento.Descripcion);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+        public static List<MovimientoInventario> ObtenerMovimientos()
+        {
+            var movimientos = new List<MovimientoInventario>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM MovimientosInventario";
+
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        movimientos.Add(new MovimientoInventario
+                        {
+                            MovimientoID = (int)reader["MovimientoID"],
+                            ProductoID = (int)reader["ProductoID"],
+                            TipoMovimiento = reader["TipoMovimiento"].ToString(),
+                            Cantidad = (int)reader["Cantidad"],
+                            FechaMovimiento = (DateTime)reader["FechaMovimiento"],
+                            Descripcion = reader["Descripcion"].ToString()
+                        });
+                    }
+                }
+            }
+            return movimientos;
+        }
+
+        public static Producto ObtenerProductoPorId(int productoId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Productos WHERE ProductoID = @ProductoID";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductoID", productoId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Producto
+                            {
+                                IdProducto = (int)reader["ProductoID"],
+                                Nombre = reader["Nombre"].ToString(),
+                                Stock = (int)reader["Stock"],
+                                Precio = (decimal)reader["Precio"]
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
     }
