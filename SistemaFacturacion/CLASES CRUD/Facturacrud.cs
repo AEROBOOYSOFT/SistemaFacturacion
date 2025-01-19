@@ -3,6 +3,7 @@ using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -79,6 +80,9 @@ namespace SistemaFacturacion.CLASES_CRUD
         // Guardar factura y sus detalles
         public static void GuardarFactura(Factura factura)
         {
+            if (factura == null || factura.Detalles == null || factura.Detalles.Count == 0)
+                throw new ArgumentException("La factura y sus detalles no pueden estar vacíos.");
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -87,33 +91,54 @@ namespace SistemaFacturacion.CLASES_CRUD
                     try
                     {
                         // Insertar factura
-                        string queryFactura = "INSERT INTO Facturas (ClienteID, Fecha, Total, Estado) " +
-                                              "OUTPUT INSERTED.FacturaID " +
-                                              "VALUES (@ClienteID, @Fecha, @Total, @Estado)";
+                        string queryFactura = @"
+                    INSERT INTO Facturas (ClienteID, Fecha, Subtotal, Impuestos, Total, Estado, NombreCliente) 
+                    OUTPUT INSERTED.FacturaID 
+                    VALUES (@ClienteID, @Fecha, @Subtotal, @Impuestos, @Total, @Estado, @NombreCliente)";
+
                         int idFactura;
-                        using (SqlCommand cmd = new SqlCommand(queryFactura, conn, transaction))
+                        using (SqlCommand cmdFactura = new SqlCommand(queryFactura, conn, transaction))
                         {
-                            cmd.Parameters.AddWithValue("@ClienteID", factura.IdCliente);
-                            cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
-                            cmd.Parameters.AddWithValue("@Total", factura.Total);
-                            cmd.Parameters.AddWithValue("@Estado", 1); // Factura activa
-                            idFactura = (int)cmd.ExecuteScalar();
+                            cmdFactura.Parameters.AddWithValue("@ClienteID", factura.IdCliente);
+                            cmdFactura.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                            cmdFactura.Parameters.AddWithValue("@Subtotal", factura.Subtotal);
+                            cmdFactura.Parameters.AddWithValue("@Impuestos", factura.Impuestos);
+                            cmdFactura.Parameters.AddWithValue("@Total", factura.Total);
+                            cmdFactura.Parameters.AddWithValue("@Estado", factura.Estado);
+                            cmdFactura.Parameters.AddWithValue("@NombreCliente", factura.NombreCliente ?? (object)DBNull.Value);
+
+                            idFactura = (int)cmdFactura.ExecuteScalar();
                         }
 
-                        // Insertar detalles de factura
-                        string queryDetalle = "INSERT INTO DetalleFactura (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal) " +
-                                              "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal)";
-                        using (SqlCommand cmd = new SqlCommand(queryDetalle, conn, transaction))
+                        // Insertar detalles de la factura
+                        string queryDetalle = @"
+                    INSERT INTO DetalleFactura (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal) 
+                    VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal)";
+
+                        using (SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, transaction))
                         {
+                            // Preparar parámetros
+                            var paramFacturaID = new SqlParameter("@FacturaID", idFactura);
+                            var paramProductoID = new SqlParameter("@ProductoID", SqlDbType.Int);
+                            var paramCantidad = new SqlParameter("@Cantidad", SqlDbType.Int);
+                            var paramPrecioUnitario = new SqlParameter("@PrecioUnitario", SqlDbType.Decimal);
+                            var paramSubtotal = new SqlParameter("@Subtotal", SqlDbType.Decimal);
+
+                            cmdDetalle.Parameters.Add(paramFacturaID);
+                            cmdDetalle.Parameters.Add(paramProductoID);
+                            cmdDetalle.Parameters.Add(paramCantidad);
+                            cmdDetalle.Parameters.Add(paramPrecioUnitario);
+                            cmdDetalle.Parameters.Add(paramSubtotal);
+
+                            // Insertar cada detalle
                             foreach (var detalle in factura.Detalles)
                             {
-                                cmd.Parameters.Clear();
-                                cmd.Parameters.AddWithValue("@FacturaID", idFactura);
-                                cmd.Parameters.AddWithValue("@ProductoID", detalle.IdProducto);
-                                cmd.Parameters.AddWithValue("@Cantidad", detalle.Cantidad);
-                                cmd.Parameters.AddWithValue("@PrecioUnitario", detalle.PrecioUnitario);
-                                cmd.Parameters.AddWithValue("@Subtotal", detalle.Subtotal);
-                                cmd.ExecuteNonQuery();
+                                paramProductoID.Value = detalle.IdProducto;
+                                paramCantidad.Value = detalle.Cantidad;
+                                paramPrecioUnitario.Value = detalle.PrecioUnitario;
+                                paramSubtotal.Value = detalle.Subtotal;
+
+                                cmdDetalle.ExecuteNonQuery();
                             }
                         }
 
@@ -122,11 +147,12 @@ namespace SistemaFacturacion.CLASES_CRUD
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        throw new Exception("Error al guardar la factura: " + ex.Message);
+                        throw new Exception($"Error al guardar la factura. Detalles: {ex.Message}", ex);
                     }
                 }
             }
         }
+
 
 
         public static Factura ObtenerFacturaConCliente(int facturaId)

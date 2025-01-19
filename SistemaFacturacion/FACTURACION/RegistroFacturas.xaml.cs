@@ -83,20 +83,21 @@ namespace SistemaFacturacion.FACTURACION
         }
         private void CalcularTotales()
         {
-            // Calcular el subtotal basado en los detalles de la factura
             decimal subtotal = detalleFactura.Sum(d => d.Cantidad * d.PrecioUnitario);
 
-            // Aplicar una tasa de impuesto del 12%
-            decimal tasaImpuesto = 0.12m;
+            decimal tasaImpuesto = ConfiguracionCRUD.ObtenerImpuestoITBIS();
             decimal impuestos = subtotal * tasaImpuesto;
-
-            // Calcular el total final
             decimal total = subtotal + impuestos;
 
-            // Actualizar los valores en la interfaz
+            // Mostrar en la interfaz
             txtSubtotal.Text = subtotal.ToString("F2");
             txtImpuestos.Text = impuestos.ToString("F2");
             txtTotal.Text = total.ToString("F2");
+
+            // Guardar en la factura actual
+            facturaActual.Subtotal = subtotal;
+            facturaActual.Impuestos = impuestos;
+            facturaActual.Total = total;
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -163,6 +164,8 @@ namespace SistemaFacturacion.FACTURACION
             dgDetalleFactura.ItemsSource = null;
             txtTotal.Text = "0.00";
             total = 0;
+            txtSubtotal.Text = "0";
+            txtImpuestos.Text = "0";
         }
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
