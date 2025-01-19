@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public static class ConfiguracionCRUD
     {
-        private static string ConnectionString = "tu_connection_string";
+        private static string ConnectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
 
         // Obtener la configuración actual
         public static decimal ObtenerImpuestoITBIS()
@@ -21,7 +22,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var command = new SqlCommand(query, connection))
                 {
                     var valor = command.ExecuteScalar()?.ToString();
-                    return decimal.TryParse(valor, out var impuesto) ? impuesto / 100 : 0m; // Convertir a porcentaje decimal
+                    return decimal.TryParse(valor, out var impuesto) ? impuesto : 0m; // Retornar el valor tal como está
                 }
             }
         }

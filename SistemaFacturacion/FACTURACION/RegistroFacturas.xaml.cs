@@ -32,7 +32,12 @@ namespace SistemaFacturacion.FACTURACION
             total = 0;
             CargarClientes();
             CargarProductos();
-        
+            facturaActual = new Factura
+            {
+                Fecha = DateTime.Now,
+                Estado = true
+            };
+
         }
         private void CargarClientes()
         {
@@ -59,15 +64,11 @@ namespace SistemaFacturacion.FACTURACION
             }
 
             var producto = (Producto)cmbProductos.SelectedItem;
-            int cantidad = int.Parse(txtCantidad.Text);
-
-            if (cantidad <= 0 || cantidad > producto.Stock)
+            if (!int.TryParse(txtCantidad.Text, out int cantidad) || cantidad <= 0 || cantidad > producto.Stock)
             {
                 MessageBox.Show("La cantidad debe ser mayor a 0 y menor o igual al stock disponible.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            decimal subtotal = producto.Precio * cantidad;
 
             detalleFactura.Add(new DetalleFactura
             {
@@ -80,14 +81,15 @@ namespace SistemaFacturacion.FACTURACION
             dgDetalleFactura.ItemsSource = null;
             dgDetalleFactura.ItemsSource = detalleFactura;
 
-            CalcularTotales(); // Llama al nuevo método para calcular totales
+            CalcularTotales();
         }
+
         private void CalcularTotales()
         {
             decimal subtotal = detalleFactura.Sum(d => d.Cantidad * d.PrecioUnitario);
 
-            decimal tasaImpuesto = ConfiguracionCRUD.ObtenerImpuestoITBIS();
-            decimal impuestos = subtotal * tasaImpuesto;
+            decimal tasaImpuesto = ConfiguracionCRUD.ObtenerImpuestoITBIS(); // Asegúrate de que este método funcione correctamente
+            decimal impuestos = subtotal * tasaImpuesto / 100; // Convertir tasa a porcentaje
             decimal total = subtotal + impuestos;
 
             // Mostrar en la interfaz
@@ -100,6 +102,7 @@ namespace SistemaFacturacion.FACTURACION
             facturaActual.Impuestos = impuestos;
             facturaActual.Total = total;
         }
+
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {

@@ -1,6 +1,7 @@
 ﻿using SistemaFacturacion.CLASES_CRUD;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -51,22 +52,23 @@ namespace SistemaFacturacion.USUARIOS.CONFIGURACION
             // Insertar en la base de datos
             try
             {
+                string connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString; ;
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    conn.Open();
+                   conn.Open();
                     string query = @"
                         INSERT INTO Configuración (NombreEmpresa, RUC, Teléfono, Dirección, ImpuestoITBIS) 
                         VALUES (@NombreEmpresa, @RUC, @Telefono, @Direccion, @ImpuestoITBIS)";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                   using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@NombreEmpresa", txtNombreEmpresa.Text.Trim());
-                        cmd.Parameters.AddWithValue("@RUC", txtRUC.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Telefono", txtTelefono.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Direccion", txtDireccion.Text.Trim());
-                        cmd.Parameters.AddWithValue("@ImpuestoITBIS", itbis);
+                      cmd.Parameters.AddWithValue("@NombreEmpresa", txtNombreEmpresa.Text.Trim());
+                       cmd.Parameters.AddWithValue("@RUC", txtRUC.Text.Trim());
+                       cmd.Parameters.AddWithValue("@Telefono", txtTelefono.Text.Trim());
+                       cmd.Parameters.AddWithValue("@Direccion", txtDireccion.Text.Trim());
+                      cmd.Parameters.AddWithValue("@ImpuestoITBIS", itbis);
 
-                        cmd.ExecuteNonQuery();
+                       cmd.ExecuteNonQuery();
                     }
                 }
 
