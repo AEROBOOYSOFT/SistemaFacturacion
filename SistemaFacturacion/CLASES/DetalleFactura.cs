@@ -11,13 +11,15 @@ namespace SistemaFacturacion.Clases
         public int IdDetalle { get; set; }
         public int IdFactura { get; set; }
         public int IdProducto { get; set; }
+        public Producto Producto { get; set; } // Relación con el producto
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public decimal Subtotal => Cantidad * PrecioUnitario;
-
-        // Propiedad de navegación a Factura
-        public Factura Factura { get; set; }
-        // Relación con Producto
-        public Producto Producto { get; set; }
+        public decimal Subtotal => Cantidad * PrecioUnitario; // Calculado
+        public decimal ImpuestoPorProducto { get; set; }
+        public decimal Descuento { get; set; }
+        public decimal TotalLinea => Subtotal + ImpuestoPorProducto - Descuento;
+        public string DescripcionProducto { get; set; }
+        public byte Estado { get; set; } // 1: Activa, 2: Anulada, 3: Devuelta
     }
+
 }

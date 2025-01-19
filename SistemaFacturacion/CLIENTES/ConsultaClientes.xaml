@@ -5,32 +5,131 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaFacturacion.CLIENTES"
         mc:Ignorable="d"
-        Title="ConsultaClientes" Height="450" Width="800">
-    <Grid Margin="10">
-        <!-- Definir las filas para el diseño -->
+        Title="Gestión de Clientes" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F2F5">
+
+    <Window.Resources>
+        <!-- Estilo para los botones -->
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Estilo para el DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EEEEEE"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#EEEEEE"/>
+            <Setter Property="RowHeight" Value="35"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- DataGrid para mostrar clientes -->
-        <DataGrid x:Name="dgClientes" AutoGenerateColumns="False" Margin="10"
-                  SelectionMode="Single" IsReadOnly="True" Grid.Row="0">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding IdCliente}" Width="50"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
-                <DataGridTextColumn Header="Rnc/Cédula" Binding="{Binding Cedula}" Width="100"/>
-                <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="100"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
-                <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="200"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <!-- Título y barra de búsqueda -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Gestión de Clientes" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#1976D2"
+                       Margin="0,0,0,15"/>
 
-        <!-- Botones de acción (Agregar, Editar, Eliminar) -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="Agregar" Width="100" Margin="5" Click="BtnAgregar_Click"/>
-            <Button x:Name="btnEditar" Content="Editar" Width="100" Margin="5" Click="BtnEditar_Click"/>
-            <Button x:Name="btnEliminar" Content="Eliminar" Width="100" Margin="5" Click="BtnEliminar_Click"/>
+            <Border Background="White" 
+                    CornerRadius="5" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="1">
+                <TextBox x:Name="txtBuscar" 
+                         Margin="10"
+                         FontSize="14"
+                         Height="35"
+                         VerticalContentAlignment="Center"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="5,0"
+                         Text="Buscar cliente..."
+                         GotFocus="TxtBuscar_GotFocus" TextChanged="txtBuscar_TextChanged"/>
+            </Border>
+        </StackPanel>
+
+        <!-- DataGrid mejorado -->
+        <Border Grid.Row="1" 
+                Background="White" 
+                CornerRadius="5" 
+                BorderBrush="#DDDDDD" 
+                BorderThickness="1">
+            <DataGrid x:Name="dgClientes" 
+                      AutoGenerateColumns="False"
+                      SelectionMode="Single" 
+                      IsReadOnly="True"
+                      Margin="0"
+                      BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding IdCliente}" Width="70"/>
+                    <DataGridTextColumn Header="NOMBRE" Binding="{Binding Nombre}" Width="*"/>
+                    <DataGridTextColumn Header="RNC/CÉDULA" Binding="{Binding Cedula}" Width="120"/>
+                    <DataGridTextColumn Header="TELÉFONO" Binding="{Binding Telefono}" Width="120"/>
+                    <DataGridTextColumn Header="EMAIL" Binding="{Binding Email}" Width="200"/>
+                    <DataGridTextColumn Header="DIRECCIÓN" Binding="{Binding Direccion}" Width="250"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- Panel de botones -->
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,20,0,0">
+            <Button x:Name="btnAgregar" 
+                    Content="+ Agregar" 
+                    Click="BtnAgregar_Click"/>
+            <Button x:Name="btnEditar" 
+                    Content="✎ Editar" 
+                    Background="#4CAF50"
+                    Click="BtnEditar_Click"/>
+            <Button x:Name="btnEliminar" 
+                    Content="╳ Eliminar" 
+                    Background="#F44336"
+                    Click="BtnEliminar_Click"/>
         </StackPanel>
     </Grid>
 </Window>

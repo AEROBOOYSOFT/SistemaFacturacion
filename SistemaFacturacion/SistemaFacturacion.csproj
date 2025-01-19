@@ -72,15 +72,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CLASES CRUD\Clientecrud.cs" />
+    <Compile Include="CLASES CRUD\ConfiguracionCRUD.cs" />
     <Compile Include="CLASES CRUD\consultafacturacrud.cs" />
     <Compile Include="CLASES CRUD\Facturacrud.cs" />
+    <Compile Include="CLASES CRUD\PermisosService.cs" />
     <Compile Include="CLASES CRUD\Productocrud.cs" />
+    <Compile Include="CLASES CRUD\Rolescrud.cs" />
+    <Compile Include="CLASES CRUD\servicioderoles.cs" />
+    <Compile Include="CLASES CRUD\UsuarioRoles.cs" />
+    <Compile Include="CLASES CRUD\Usuarioscrud.cs" />
+    <Compile Include="CLASES CRUD\UsuarioService.cs" />
+    <Compile Include="CLASES\AuditoriaServicio.cs" />
     <Compile Include="CLASES\Cliente.cs" />
     <Compile Include="CLASES\Configuracion.cs" />
+    <Compile Include="CLASES\ControlPermisos.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
+    <Compile Include="CLASES\MovimientoInventario.cs" />
+    <Compile Include="CLASES\Permiso.cs" />
     <Compile Include="CLASES\Producto.cs" />
+    <Compile Include="CLASES\Rol.cs" />
     <Compile Include="CLASES\Usuario.cs" />
+    <Compile Include="CLASES\UsuarioRol.cs" />
     <Compile Include="CLIENTES\ClienteFormulario.xaml.cs">
       <DependentUpon>ClienteFormulario.xaml</DependentUpon>
     </Compile>
@@ -95,6 +108,9 @@
     </Compile>
     <Compile Include="FACTURACION\RegistroFacturas.xaml.cs">
       <DependentUpon>RegistroFacturas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="INVENTARIO\ConsultaMovimientosInventario.xaml.cs">
+      <DependentUpon>ConsultaMovimientosInventario.xaml</DependentUpon>
     </Compile>
     <Compile Include="PRODUCTOS\Categoria.cs">
       <SubType>Form</SubType>
@@ -114,9 +130,31 @@
     <Compile Include="PRODUCTOS\ProductoFormulario.xaml.cs">
       <DependentUpon>ProductoFormulario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\CONFIGURACION\AsignarPermisosARoles.xaml.cs">
+      <DependentUpon>AsignarPermisosARoles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml.cs">
+      <DependentUpon>ConfiguracionRoles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\CONFIGURACION\ConfigurarITBIS.xaml.cs">
+      <DependentUpon>ConfigurarITBIS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\CrearUsuario.xaml.cs">
+      <DependentUpon>CrearUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionPermisos.xaml.cs">
+      <DependentUpon>GestionPermisos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionRoles.xaml.cs">
+      <DependentUpon>GestionRoles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="USUARIOS\GESTIONES CRUD\GestionUsuarios.xaml.cs">
+      <DependentUpon>GestionUsuarios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="USUARIOS\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="USUARIOS\SesionActual.cs" />
     <Page Include="CLIENTES\ClienteFormulario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +175,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="INVENTARIO\ConsultaMovimientosInventario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,6 +196,34 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PRODUCTOS\ProductoFormulario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\CONFIGURACION\AsignarPermisosARoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\CONFIGURACION\ConfiguracionRoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\CONFIGURACION\ConfigurarITBIS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\CrearUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionPermisos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionRoles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="USUARIOS\GESTIONES CRUD\GestionUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

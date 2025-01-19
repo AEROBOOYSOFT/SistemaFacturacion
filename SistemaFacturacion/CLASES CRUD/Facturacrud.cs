@@ -1,7 +1,9 @@
 ﻿using SistemaFacturacion.Clases;
+using SistemaFacturacion.CLASES;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -78,6 +80,9 @@ namespace SistemaFacturacion.CLASES_CRUD
         // Guardar factura y sus detalles
         public static void GuardarFactura(Factura factura)
         {
+            if (factura == null || factura.Detalles == null || factura.Detalles.Count == 0)
+                throw new ArgumentException("La factura y sus detalles no pueden estar vacíos.");
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -86,33 +91,69 @@ namespace SistemaFacturacion.CLASES_CRUD
                     try
                     {
                         // Insertar factura
-                        string queryFactura = "INSERT INTO Facturas (ClienteID, Fecha, Total, Estado) " +
-                                              "OUTPUT INSERTED.FacturaID " +
-                                              "VALUES (@ClienteID, @Fecha, @Total, @Estado)";
+                        string queryFactura = @"
+                    INSERT INTO Facturas (ClienteID, Fecha, Subtotal, Impuestos, Total, Estado, NombreCliente) 
+                    OUTPUT INSERTED.FacturaID 
+                    VALUES (@ClienteID, @Fecha, @Subtotal, @Impuestos, @Total, @Estado, @NombreCliente)";
+
                         int idFactura;
-                        using (SqlCommand cmd = new SqlCommand(queryFactura, conn, transaction))
+                        using (SqlCommand cmdFactura = new SqlCommand(queryFactura, conn, transaction))
                         {
-                            cmd.Parameters.AddWithValue("@ClienteID", factura.IdCliente);
-                            cmd.Parameters.AddWithValue("@Fecha", factura.Fecha);
-                            cmd.Parameters.AddWithValue("@Total", factura.Total);
-                            cmd.Parameters.AddWithValue("@Estado", 1); // Factura activa
-                            idFactura = (int)cmd.ExecuteScalar();
+                            cmdFactura.Parameters.AddWithValue("@ClienteID", factura.IdCliente);
+                            cmdFactura.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                            cmdFactura.Parameters.AddWithValue("@Subtotal", factura.Subtotal);
+                            cmdFactura.Parameters.AddWithValue("@Impuestos", factura.Impuestos);
+                            cmdFactura.Parameters.AddWithValue("@Total", factura.Total);
+                            cmdFactura.Parameters.AddWithValue("@Estado", factura.Estado);
+                            cmdFactura.Parameters.AddWithValue("@NombreCliente", factura.NombreCliente ?? (object)DBNull.Value);
+
+                            idFactura = (int)cmdFactura.ExecuteScalar();
                         }
 
-                        // Insertar detalles de factura
-                        string queryDetalle = "INSERT INTO DetalleFactura (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal) " +
-                                              "VALUES (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal)";
-                        using (SqlCommand cmd = new SqlCommand(queryDetalle, conn, transaction))
+                        // Insertar detalles de la factura
+                        string queryDetalle = @"
+    INSERT INTO DetalleFactura 
+    (FacturaID, ProductoID, Cantidad, PrecioUnitario, Subtotal, ImpuestoPorProducto, Descuento, TotalLinea, DescripcionProducto, Estado) 
+    VALUES 
+    (@FacturaID, @ProductoID, @Cantidad, @PrecioUnitario, @Subtotal, @ImpuestoPorProducto, @Descuento, @TotalLinea, @DescripcionProducto, @Estado)";
+
+                        using (SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, transaction))
                         {
+                            var paramFacturaID = new SqlParameter("@FacturaID", idFactura);
+                            var paramProductoID = new SqlParameter("@ProductoID", SqlDbType.Int);
+                            var paramCantidad = new SqlParameter("@Cantidad", SqlDbType.Int);
+                            var paramPrecioUnitario = new SqlParameter("@PrecioUnitario", SqlDbType.Decimal);
+                            var paramSubtotal = new SqlParameter("@Subtotal", SqlDbType.Decimal);
+                            var paramImpuestoPorProducto = new SqlParameter("@ImpuestoPorProducto", SqlDbType.Decimal);
+                            var paramDescuento = new SqlParameter("@Descuento", SqlDbType.Decimal);
+                            var paramTotalLinea = new SqlParameter("@TotalLinea", SqlDbType.Decimal);
+                            var paramDescripcionProducto = new SqlParameter("@DescripcionProducto", SqlDbType.NVarChar, 255);
+                            var paramEstado = new SqlParameter("@Estado", SqlDbType.TinyInt);
+
+                            cmdDetalle.Parameters.Add(paramFacturaID);
+                            cmdDetalle.Parameters.Add(paramProductoID);
+                            cmdDetalle.Parameters.Add(paramCantidad);
+                            cmdDetalle.Parameters.Add(paramPrecioUnitario);
+                            cmdDetalle.Parameters.Add(paramSubtotal);
+                            cmdDetalle.Parameters.Add(paramImpuestoPorProducto);
+                            cmdDetalle.Parameters.Add(paramDescuento);
+                            cmdDetalle.Parameters.Add(paramTotalLinea);
+                            cmdDetalle.Parameters.Add(paramDescripcionProducto);
+                            cmdDetalle.Parameters.Add(paramEstado);
+
                             foreach (var detalle in factura.Detalles)
                             {
-                                cmd.Parameters.Clear();
-                                cmd.Parameters.AddWithValue("@FacturaID", idFactura);
-                                cmd.Parameters.AddWithValue("@ProductoID", detalle.IdProducto);
-                                cmd.Parameters.AddWithValue("@Cantidad", detalle.Cantidad);
-                                cmd.Parameters.AddWithValue("@PrecioUnitario", detalle.PrecioUnitario);
-                                cmd.Parameters.AddWithValue("@Subtotal", detalle.Subtotal);
-                                cmd.ExecuteNonQuery();
+                                paramProductoID.Value = detalle.IdProducto;
+                                paramCantidad.Value = detalle.Cantidad;
+                                paramPrecioUnitario.Value = detalle.PrecioUnitario;
+                                paramSubtotal.Value = detalle.Subtotal;
+                                paramImpuestoPorProducto.Value = detalle.ImpuestoPorProducto;
+                                paramDescuento.Value = detalle.Descuento;
+                                paramTotalLinea.Value = detalle.TotalLinea;
+                                paramDescripcionProducto.Value = detalle.DescripcionProducto ?? (object)DBNull.Value;
+                                paramEstado.Value = detalle.Estado;
+
+                                cmdDetalle.ExecuteNonQuery();
                             }
                         }
 
@@ -121,11 +162,12 @@ namespace SistemaFacturacion.CLASES_CRUD
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        throw new Exception("Error al guardar la factura: " + ex.Message);
+                        throw new Exception($"Error al guardar la factura. Detalles: {ex.Message}", ex);
                     }
                 }
             }
         }
+
 
 
         public static Factura ObtenerFacturaConCliente(int facturaId)
@@ -164,6 +206,97 @@ namespace SistemaFacturacion.CLASES_CRUD
             }
 
             return factura;
+        }
+        public static void ActualizarStock(int productoId, int nuevoStock)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "UPDATE Productos SET Stock = @Stock WHERE ProductoID = @ProductoID";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Stock", nuevoStock);
+                    command.Parameters.AddWithValue("@ProductoID", productoId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+    
+    public static void RegistrarMovimiento(MovimientoInventario movimiento)
+    {
+        using (var connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            var query = "INSERT INTO MovimientosInventario (ProductoID, TipoMovimiento, Cantidad, FechaMovimiento, Descripcion) " +
+                        "VALUES (@ProductoID, @TipoMovimiento, @Cantidad, @FechaMovimiento, @Descripcion)";
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@ProductoID", movimiento.ProductoID);
+                command.Parameters.AddWithValue("@TipoMovimiento", movimiento.TipoMovimiento);
+                command.Parameters.AddWithValue("@Cantidad", movimiento.Cantidad);
+                command.Parameters.AddWithValue("@FechaMovimiento", movimiento.FechaMovimiento);
+                command.Parameters.AddWithValue("@Descripcion", string.IsNullOrEmpty(movimiento.Descripcion) ? (object)DBNull.Value : movimiento.Descripcion);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+        public static List<MovimientoInventario> ObtenerMovimientos()
+        {
+            var movimientos = new List<MovimientoInventario>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM MovimientosInventario";
+
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        movimientos.Add(new MovimientoInventario
+                        {
+                            MovimientoID = (int)reader["MovimientoID"],
+                            ProductoID = (int)reader["ProductoID"],
+                            TipoMovimiento = reader["TipoMovimiento"].ToString(),
+                            Cantidad = (int)reader["Cantidad"],
+                            FechaMovimiento = (DateTime)reader["FechaMovimiento"],
+                            Descripcion = reader["Descripcion"].ToString()
+                        });
+                    }
+                }
+            }
+            return movimientos;
+        }
+
+        public static Producto ObtenerProductoPorId(int productoId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Productos WHERE ProductoID = @ProductoID";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductoID", productoId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Producto
+                            {
+                                IdProducto = (int)reader["ProductoID"],
+                                Nombre = reader["Nombre"].ToString(),
+                                Stock = (int)reader["Stock"],
+                                Precio = (decimal)reader["Precio"]
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
     }

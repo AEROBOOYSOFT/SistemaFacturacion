@@ -1,136 +1,121 @@
-﻿
-using SistemaFacturacion.CLASES;
+﻿using SistemaFacturacion.CLASES;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MessageBox = System.Windows.MessageBox;
 
 namespace SistemaFacturacion.USUARIOS
 {
-    /// <summary>
-    /// Lógica de interacción para Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         public Login()
         {
             InitializeComponent();
         }
-        //Permite el movimiento del formulario 
+
+        // Permite mover la ventana.
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
-        //minimiza el formulario
+
+        // Minimiza la ventana.
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
-        //cierra el sistema
+
+        // Cierra la aplicación.
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        //valida los datos proporcionado por el usuaio,
+
+        // Maneja el evento de inicio de sesión.
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            Validar();
-        }
+            string username = txtUser.Text;
+            string password = txtPass.Password;
 
-        private void Validar()
-        {
-            //Llama la clase usuario
-            Usuario usuario = new Usuario();
-
-            usuario.Username = txtUser.Text;
-            usuario.Password = txtPass.Password;
-
-            /*confirma que los campos no esten vacios,condición en la que ambas deben de ser verdadera
-            si estan vacio pedira los datos, de otro modo realiza la conexion con la base de datos
-          */
-            if (string.IsNullOrWhiteSpace(usuario.Username) || string.IsNullOrWhiteSpace(usuario.Password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Verificar campos.", "Error de Validación", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, ingresa todos los campos.", "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
-
-
             }
 
-            //Conexion a la base de datos Sistema de facturación
-            string _connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            // Validar las credenciales.
+            if (ValidarUsuario(username, password))
             {
+                MessageBox.Show($"Bienvenido, {username}!", "Inicio de Sesión Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                // Abrir la ventana principal.
+                this.Hide();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de inicio de sesión", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Método para validar credenciales.
+        private bool ValidarUsuario(string username, string password)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
                 try
                 {
                     conn.Open();
-                    string query = "Select COUNT(1) from USUARIOS where Username=@Username And Password=@Password ";
+
+                    // Consulta para validar el usuario.
+                    string query = "SELECT Contraseña FROM Usuario WHERE NombreUsuario = @NombreUsuario AND Activo = 1";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = usuario.Username;
-                        cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = usuario.Password;
+                        cmd.Parameters.AddWithValue("@NombreUsuario", username);
 
+                        var passwordFromDb = cmd.ExecuteScalar() as string;
 
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        if (count == 1)
+                        if (!string.IsNullOrEmpty(passwordFromDb))
                         {
-                            this.Hide();
-                            MainWindow frm = new MainWindow();
-                            frm.Show();
+                            // Comparar la contraseña en texto claro (sin hash).
+                            return password == passwordFromDb;
                         }
-
                         else
                         {
-                            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("usuario o contraseña incorrecta", "Error de login", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Error);
-
+                            MessageBox.Show("El usuario no está activo o no existe.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
-                catch (SqlException sqlEx)
+                catch (SqlException ex)
                 {
-
-                    System.Windows.MessageBox.Show("Error de conexión: " + sqlEx.Message);
+                    MessageBox.Show($"Error de conexión con la base de datos: {ex.Message}", "Error de Conexión", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
-
-                    System.Windows.MessageBox.Show("Error inesperado: " + ex.Message);
+                    MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
             }
+
+            return false;
         }
 
         private void ResetPassword_Click(object sender, RoutedEventArgs e)
         {
+            // Lógica para restablecer la contraseña si es necesario.
+        }
 
+        private void btnCrearUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            // Crear una nueva instancia de la ventana CrearUsuario
+            CrearUsuario crearUsuarioWindow = new CrearUsuario();
+            crearUsuarioWindow.Show(); // Mostrar la ventana de registro
+            this.Hide(); // Ocultar la ventana de login
         }
     }
-
-
-
 }
-    
-
-
-
-
-
-
-

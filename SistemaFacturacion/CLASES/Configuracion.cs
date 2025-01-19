@@ -13,6 +13,6 @@ namespace SistemaFacturacion.Clases
         public string Ruc { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-        public decimal ImpuestoIVA { get; set; }
+        public decimal ImpuestoITBIS { get; set; }
     }
 }
