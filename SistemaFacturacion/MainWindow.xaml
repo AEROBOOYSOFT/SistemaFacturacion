@@ -9,13 +9,13 @@
     <Grid>
         <!-- Menú en la parte superior -->
         <Menu VerticalAlignment="Top">
-            <MenuItem Header="Usuarios" Click="MenuItem_Click">
+            <MenuItem Header="Usuarios">
                 <MenuItem Header="Gestionar Usuarios" Click="MenuItemGestionUsuarios_Click"/>
             </MenuItem>
-            <MenuItem Header="Roles" Click="MenuItem_Click_1">
+            <MenuItem Header="Roles">
                 <MenuItem Header="Gestionar Roles" Click="MenuItemGestionRoles_Click"/>
             </MenuItem>
-            <MenuItem Header="Permisos" Click="MenuItem_Click_2">
+            <MenuItem Header="Permisos">
                 <MenuItem Header="Asignar Permisos a Roles" Click="MenuItemAsignarPermisos_Click"/>
                 <MenuItem Header="Gestionar Permisos" Click="MenuItemGestionPermisos_Click"/>
             </MenuItem>

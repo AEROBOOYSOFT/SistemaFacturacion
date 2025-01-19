@@ -83,7 +83,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "UPDATE Permisos SET NombrePermiso = @NombrePermiso, Descripcion = @Descripcion WHERE PermisoID = @PermisoID";
+                    var query = "UPDATE Permiso SET NombrePermiso = @NombrePermiso, Descripcion = @Descripcion WHERE PermisoID = @PermisoID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -109,7 +109,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "DELETE FROM Permisos WHERE PermisoID = @PermisoID";
+                    var query = "DELETE FROM Permiso WHERE PermisoID = @PermisoID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -158,7 +158,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "SELECT p.PermisoID, p.NombrePermiso, p.Descripcion FROM Permisos p " +
+                    var query = "SELECT p.PermisoID, p.NombrePermiso, p.Descripcion FROM Permiso p " +
                                 "INNER JOIN RolPermiso rp ON p.PermisoID = rp.PermisoID " +
                                 "WHERE rp.RolID = @RolID";
 

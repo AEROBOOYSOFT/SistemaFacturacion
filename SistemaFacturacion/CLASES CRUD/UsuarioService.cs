@@ -30,9 +30,9 @@ namespace SistemaFacturacion.CLASES_CRUD
                     connection.Open();
                     var query = @"
                         SELECT u.UsuarioID, u.NombreUsuario, u.Email, u.Contraseña, u.Activo, u.FechaCreacion, ur.RolID, r.Nombre AS RolNombre
-                        FROM Usuarios u
+                        FROM Usuario u
                         LEFT JOIN UsuarioRol ur ON u.UsuarioID = ur.UsuarioID
-                        LEFT JOIN Roles r ON ur.RolID = r.RolID";
+                        LEFT JOIN Rol r ON ur.RolID = r.RolID";
 
                     using (var command = new SqlCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -85,7 +85,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = @"INSERT INTO Usuarios (NombreUsuario, Email, Contraseña, Activo, FechaCreacion) 
+                    var query = @"INSERT INTO Usuario (NombreUsuario, Email, Contraseña, Activo, FechaCreacion) 
                                   VALUES (@NombreUsuario, @Email, @Contraseña, @Activo, @FechaCreacion);
                                   SELECT SCOPE_IDENTITY();"; // Devuelve el ID del usuario insertado
 

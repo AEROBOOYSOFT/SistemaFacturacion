@@ -26,7 +26,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "SELECT RolID, Nombre, Descripcion FROM Roles";
+                    var query = "SELECT RolID, Nombre, Descripcion FROM Rol";
 
                     using (var command = new SqlCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -60,7 +60,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "INSERT INTO Roles (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
+                    var query = "INSERT INTO Rol (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -112,7 +112,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
-                    var query = "DELETE FROM Roles WHERE RolID = @RolID";
+                    var query = "DELETE FROM Rol WHERE RolID = @RolID";
 
                     using (var command = new SqlCommand(query, connection))
                     {
