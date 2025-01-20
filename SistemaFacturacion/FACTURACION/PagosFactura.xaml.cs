@@ -119,28 +119,56 @@ namespace SistemaFacturacion.FACTURACION
         }
         private void GenerarReciboPDF(Pago pago)
         {
-            string filePath = $"Recibo_Pago_{pago.FacturaID}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+            // Definir el nombre y la ruta del archivo PDF
+            string filePath = ObtenerRutaRecibo(pago);
 
+            // Crear el archivo PDF y escribir en él
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 var writer = new iText.Kernel.Pdf.PdfWriter(fs);
                 var pdf = new iText.Layout.Document(new iText.Kernel.Pdf.PdfDocument(writer));
 
-                pdf.Add(new iText.Layout.Element.Paragraph("RECIBO DE PAGO")
-                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                    .SetFontSize(16)
-                    .SetBold());
+                // Agregar título
+                AgregarTitulo(pdf);
 
-                pdf.Add(new iText.Layout.Element.Paragraph($"Factura ID: {pago.FacturaID}"));
-                pdf.Add(new iText.Layout.Element.Paragraph($"Fecha de Pago: {pago.FechaPago.ToString("dd/MM/yyyy")}"));
-                pdf.Add(new iText.Layout.Element.Paragraph($"Monto Pagado: {pago.Monto:C}"));
-                pdf.Add(new iText.Layout.Element.Paragraph($"Método de Pago: {pago.MetodoPago}"));
+                // Agregar detalles del pago
+                AgregarDetallesPago(pdf, pago);
 
+                // Cerrar el documento PDF
                 pdf.Close();
             }
 
+            // Mostrar mensaje de éxito
+            MostrarMensajeExito(filePath);
+        }
+
+        private string ObtenerRutaRecibo(Pago pago)
+        {
+            return $"Recibo_Pago_{pago.FacturaID}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+        }
+
+        private void AgregarTitulo(iText.Layout.Document pdf)
+        {
+            var titulo = new iText.Layout.Element.Paragraph("RECIBO DE PAGO")
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetFontSize(16)
+                .SetBold();
+            pdf.Add(titulo);
+        }
+
+        private void AgregarDetallesPago(iText.Layout.Document pdf, Pago pago)
+        {
+            pdf.Add(new iText.Layout.Element.Paragraph($"Factura ID: {pago.FacturaID}"));
+            pdf.Add(new iText.Layout.Element.Paragraph($"Fecha de Pago: {pago.FechaPago.ToString("dd/MM/yyyy")}"));
+            pdf.Add(new iText.Layout.Element.Paragraph($"Monto Pagado: {pago.Monto:C}"));
+            pdf.Add(new iText.Layout.Element.Paragraph($"Método de Pago: {pago.MetodoPago}"));
+        }
+
+        private void MostrarMensajeExito(string filePath)
+        {
             MessageBox.Show($"Recibo generado: {filePath}", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
 
         private void btnEliminarPago_Click(object sender, RoutedEventArgs e)
         {
