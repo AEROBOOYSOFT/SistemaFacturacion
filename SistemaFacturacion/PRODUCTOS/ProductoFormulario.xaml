@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SistemaFacturacion.PRODUCTOS"
         mc:Ignorable="d"
         Title="Formulario de Producto" 
-        Height="542" 
+        Height="555" 
         Width="600"
         WindowStartupLocation="CenterScreen"
         Background="#F0F2F5">
@@ -81,7 +81,7 @@
             Margin="20" 
             CornerRadius="10" 
             Padding="30">
-        <Grid>
+        <Grid Margin="0,0,0,-20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

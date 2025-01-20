@@ -20,6 +20,8 @@ namespace SistemaFacturacion.Clases
         public decimal TotalLinea => Subtotal + ImpuestoPorProducto - Descuento;
         public string DescripcionProducto { get; set; }
         public byte Estado { get; set; } // 1: Activa, 2: Anulada, 3: Devuelta
+                                         // Propiedad calculada que extrae el nombre del producto
+        public string NombreProducto => Producto?.Nombre;  // Propiedad para obtener el nombre del producto
     }
 
 }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Data;
 using SistemaFacturacion.Clases_crud;
 
 namespace SistemaFacturacion.PRODUCTOS
@@ -74,6 +77,21 @@ namespace SistemaFacturacion.PRODUCTOS
                 MessageBox.Show("Selecciona un producto para eliminar.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public class BooleanToColorConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                bool estado = (bool)value;
+                return estado ? Brushes.Green : Brushes.Red; // Color verde si verdadero, rojo si falso
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     }
 }
 

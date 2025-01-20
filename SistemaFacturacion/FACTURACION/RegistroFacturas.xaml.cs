@@ -76,6 +76,7 @@ namespace SistemaFacturacion.FACTURACION
                 Producto = producto,
                 Cantidad = cantidad,
                 PrecioUnitario = producto.Precio
+
             });
 
             dgDetalleFactura.ItemsSource = null;
@@ -131,8 +132,9 @@ namespace SistemaFacturacion.FACTURACION
                 Fecha = DateTime.Now,
                 Total = total,
                 Detalles = detalleFactura,
-                Cliente = clienteSeleccionado
-            };
+                Cliente = clienteSeleccionado,
+                Estado = true // Asignar un estado válido (por ejemplo, 1 para activa)
+            }; 
 
             try
             {
