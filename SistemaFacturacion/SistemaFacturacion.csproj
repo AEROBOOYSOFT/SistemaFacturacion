@@ -75,6 +75,7 @@
     <Compile Include="CLASES CRUD\ConfiguracionCRUD.cs" />
     <Compile Include="CLASES CRUD\consultafacturacrud.cs" />
     <Compile Include="CLASES CRUD\Facturacrud.cs" />
+    <Compile Include="CLASES CRUD\PagoCRUD.cs" />
     <Compile Include="CLASES CRUD\PermisosService.cs" />
     <Compile Include="CLASES CRUD\Productocrud.cs" />
     <Compile Include="CLASES CRUD\Rolescrud.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
     <Compile Include="CLASES\MovimientoInventario.cs" />
+    <Compile Include="CLASES\Pago.cs" />
     <Compile Include="CLASES\Permiso.cs" />
     <Compile Include="CLASES\Producto.cs" />
     <Compile Include="CLASES\Rol.cs" />
@@ -105,6 +107,9 @@
     </Compile>
     <Compile Include="FACTURACION\DetalleFacturaVentana.xaml.cs">
       <DependentUpon>DetalleFacturaVentana.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FACTURACION\PagosFactura.xaml.cs">
+      <DependentUpon>PagosFactura.xaml</DependentUpon>
     </Compile>
     <Compile Include="FACTURACION\RegistroFacturas.xaml.cs">
       <DependentUpon>RegistroFacturas.xaml</DependentUpon>
@@ -168,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FACTURACION\DetalleFacturaVentana.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FACTURACION\PagosFactura.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

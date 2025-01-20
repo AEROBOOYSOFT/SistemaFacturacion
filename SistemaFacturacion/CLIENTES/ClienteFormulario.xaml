@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SistemaFacturacion"
         mc:Ignorable="d"
         Title="Registro de Cliente" 
-        Height="600" 
+        Height="715" 
         Width="500"
         WindowStartupLocation="CenterScreen"
         Background="#FAFBFC">

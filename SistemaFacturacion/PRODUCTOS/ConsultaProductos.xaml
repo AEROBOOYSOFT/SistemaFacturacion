@@ -5,32 +5,145 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SistemaFacturacion.PRODUCTOS"
         mc:Ignorable="d"
-        Title="ConsultaProductos" Height="450" Width="800">
-    <Grid Margin="10">
-        <!-- Definir las filas para el diseño -->
+        Title="Consulta de Productos" 
+        Height="600" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F5F5">
+
+    <Window.Resources>
+        <!-- Estilos para los botones -->
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Estilo para el DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8F8F8"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#EEEEEE"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#EEEEEE"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- DataGrid para mostrar productos -->
-        <DataGrid x:Name="dgProductos" AutoGenerateColumns="False" Margin="10"
-                  SelectionMode="Single" IsReadOnly="True" Grid.Row="0">
+        <!-- Título y barra de búsqueda -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Gestión de Productos" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,15"/>
+            <TextBox x:Name="txtBuscar" 
+                     Height="35" 
+                     Padding="10,5"
+                     FontSize="14"
+                     Background="White"
+                     BorderBrush="#DDDDDD"
+                     BorderThickness="1"
+                     VerticalContentAlignment="Center">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Resources>
+                            <VisualBrush x:Key="BuscarHint" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                                <VisualBrush.Visual>
+                                    <TextBlock Text="Buscar productos..." Foreground="Gray" Margin="5,0,0,0"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="{StaticResource BuscarHint}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </StackPanel>
+
+        <!-- DataGrid mejorado -->
+        <DataGrid x:Name="dgProductos" 
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  SelectionMode="Single"
+                  IsReadOnly="True"
+                  CanUserResizeRows="False"
+                  RowHeaderWidth="0"
+                  FontSize="13">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding ProductoID}" Width="50"/>
-                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="150"/>
-                <DataGridTextColumn Header="Descripción" Binding="{Binding Descripcion}" Width="200"/>
-                <DataGridTextColumn Header="Precio" Binding="{Binding Precio}" Width="100"/>
-                <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="100"/>
-                <DataGridCheckBoxColumn Header="Estado" Binding="{Binding Estado}" Width="80"/>
+                <DataGridTextColumn Header="ID" 
+                                  Binding="{Binding ProductoID}" 
+                                  Width="80"/>
+                <DataGridTextColumn Header="Nombre" 
+                                  Binding="{Binding Nombre}" 
+                                  Width="200"/>
+                <DataGridTextColumn Header="Descripción" 
+                                  Binding="{Binding Descripcion}" 
+                                  Width="*"/>
+                <DataGridTextColumn Header="Precio" 
+                                  Binding="{Binding Precio, StringFormat=C}" 
+                                  Width="120"/>
+                <DataGridTextColumn Header="Stock" 
+                                  Binding="{Binding Stock}" 
+                                  Width="100"/>
+                <DataGridCheckBoxColumn Header="Estado" 
+                                      Binding="{Binding Estado}" 
+                                      Width="80"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Botones de acción (Agregar, Editar, Eliminar) -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1">
-            <Button x:Name="btnAgregar" Content="Agregar" Width="100" Margin="5" Click="BtnAgregar_Click"/>
-            <Button x:Name="btnEditar" Content="Editar" Width="100" Margin="5" Click="BtnEditar_Click"/>
-            <Button x:Name="btnEliminar" Content="Eliminar" Width="100" Margin="5" Click="BtnEliminar_Click"/>
-        </StackPanel>
+        <!-- Panel de botones -->
+        <Grid Grid.Row="2" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                <Button x:Name="btnAgregar" 
+                        Content="Agregar"
+                        Click="BtnAgregar_Click"/>
+                <Button x:Name="btnEditar" 
+                        Content="Editar"
+                        Background="#4CAF50"
+                        Click="BtnEditar_Click"/>
+                <Button x:Name="btnEliminar" 
+                        Content="Eliminar"
+                        Background="#F44336"
+                        Click="BtnEliminar_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

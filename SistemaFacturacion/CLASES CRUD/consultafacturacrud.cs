@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace SistemaFacturacion.CLASES_CRUD
 {
-    internal class consultafacturacrud
+    public class consultafacturacrud
     {
         private static readonly string _connectionString;
 
@@ -120,6 +120,7 @@ namespace SistemaFacturacion.CLASES_CRUD
                 }
             }
         }
+
     }
 }
 
