@@ -85,12 +85,44 @@
                         Grid.Column="2" 
                         Click="btnBuscar_Click"
                         Width="100"/>
+
+            </Grid>
+        </GroupBox>
+
+        <!-- Filtro por Fecha -->
+        <GroupBox Header="Filtrar por Fecha" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Fecha Inicio:" 
+                       VerticalAlignment="Center" 
+                       Margin="0,0,10,0"/>
+                <DatePicker x:Name="dpFechaInicio" 
+                            Grid.Column="1" 
+                            Width="200"/>
+                <Label Content="Fecha Fin:" 
+                       Grid.Column="2" 
+                       VerticalAlignment="Center" 
+                       Margin="10,0,10,0"/>
+                <DatePicker x:Name="dpFechaFin" 
+                            Grid.Column="3" 
+                            Width="200"/>
+                <Button Content="Filtrar" 
+                        Grid.Column="4" 
+                        Click="btnFiltrar_Click"
+                        Width="100"/>
             </Grid>
         </GroupBox>
 
         <!-- Detalles de la factura -->
         <GroupBox Header="Información de Factura" 
-                  Grid.Row="1">
+                  Grid.Row="2">
             <UniformGrid Columns="2" 
                          HorizontalAlignment="Left">
                 <StackPanel Margin="0,0,20,0">
@@ -110,7 +142,7 @@
 
         <!-- Lista de pagos realizados -->
         <GroupBox Header="Historial de Pagos" 
-                  Grid.Row="2">
+                  Grid.Row="3">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -157,7 +189,7 @@
 
         <!-- Registro de nuevo pago -->
         <GroupBox Header="Registrar Pago" 
-                  Grid.Row="3">
+                  Grid.Row="4">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

@@ -151,8 +151,8 @@ namespace SistemaFacturacion.FACTURACION
         {
             var titulo = new iText.Layout.Element.Paragraph("RECIBO DE PAGO")
                 .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                .SetFontSize(16)
-                .SetBold();
+                .SetFontSize(16);
+                
             pdf.Add(titulo);
         }
 
