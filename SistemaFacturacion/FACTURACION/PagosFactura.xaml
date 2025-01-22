@@ -6,24 +6,31 @@
         xmlns:local="clr-namespace:SistemaFacturacion.FACTURACION"
         mc:Ignorable="d"
         Title="Gestión de Pagos de Facturas" 
-        Height="700" 
-        Width="900"
-        WindowStartupLocation="CenterScreen"
-        Background="#F5F5F5">
+        Height="800" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="15,5"/>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Padding" Value="20,0"/>
             <Setter Property="Background" Value="#2196F3"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                CornerRadius="4"
+                                CornerRadius="6"
                                 BorderThickness="0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="4" 
+                                                  ShadowDepth="2" 
+                                                  Opacity="0.2"/>
+                            </Border.Effect>
                             <ContentPresenter HorizontalAlignment="Center" 
                                             VerticalAlignment="Center"/>
                         </Border>
@@ -33,203 +40,300 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#1976D2"/>
+                    <Setter Property="Cursor" Value="Hand"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="GroupBox">
-            <Setter Property="Margin" Value="0,0,0,10"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+        <!-- Modern GroupBox Style -->
+        <Style x:Key="ModernGroupBox" TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,0,16"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
             <Setter Property="Background" Value="White"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" 
+                                      ShadowDepth="1" 
+                                      Opacity="0.1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"
+                                 FontSize="16"
+                                 FontWeight="SemiBold"
+                                 Foreground="#333333"
+                                 Margin="0,0,0,8"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style TargetType="TextBox">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Padding" Value="5,2"/>
-            <Setter Property="BorderBrush" Value="#DDDDDD"/>
+        <!-- Input Controls Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style TargetType="ComboBox">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <!-- ComboBox Style -->
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <!-- DataGrid Style -->
+        <Style x:Key="ModernDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8F8F8"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Border Background="#F5F5F5" Padding="24">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Búsqueda y Filtros -->
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-        <!-- Búsqueda de factura -->
-        <GroupBox Header="Buscar Factura" Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                    <!-- Búsqueda de Factura -->
+                    <GroupBox Header="Buscar Factura" 
+                             Style="{StaticResource ModernGroupBox}">
+                        <DockPanel LastChildFill="True">
+                            <Button DockPanel.Dock="Right"
+                                    Content="Buscar"
+                                    Style="{StaticResource ModernButton}"
+                                    Click="btnBuscar_Click"
+                                    Width="100"/>
+                            <TextBox x:Name="txtFacturaID"
+                                    Style="{StaticResource ModernTextBox}"
+                                    Margin="0,0,8,0"/>
+                        </DockPanel>
+                    </GroupBox>
 
-                <Label Content="Factura ID:" 
-                       VerticalAlignment="Center" 
-                       Margin="0,0,10,0"/>
-                <TextBox x:Name="txtFacturaID" 
-                        Grid.Column="1" 
-                        Width="200" 
-                        HorizontalAlignment="Left"/>
-                <Button Content="Buscar" 
-                        Grid.Column="2" 
-                        Click="btnBuscar_Click"
-                        Width="100"/>
+                    <!-- Filtro por Fecha -->
+                    <GroupBox Header="Filtrar por Fecha"
+                             Grid.Column="1"
+                             Style="{StaticResource ModernGroupBox}"
+                             Margin="8,0,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-            </Grid>
-        </GroupBox>
+                            <DatePicker x:Name="dpFechaInicio"
+                                      Height="36"
+                                      Margin="0,0,8,0"/>
+                            <DatePicker x:Name="dpFechaFin"
+                                      Grid.Column="1"
+                                      Height="36"
+                                      Margin="0,0,8,0"/>
+                            <Button Grid.Column="2"
+                                    Content="Filtrar"
+                                    Style="{StaticResource ModernButton}"
+                                    Click="btnFiltrar_Click"
+                                    Width="100"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
 
-        <!-- Filtro por Fecha -->
-        <GroupBox Header="Filtrar por Fecha" Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+                <!-- Información de Factura -->
+                <GroupBox Header="Información de Factura"
+                         Style="{StaticResource ModernGroupBox}">
+                    <UniformGrid Columns="2">
+                        <StackPanel Margin="0,0,8,0">
+                            <TextBlock Text="Cliente"
+                                     Margin="0,0,0,4"
+                                     FontWeight="SemiBold"/>
+                            <TextBox x:Name="txtCliente"
+                                    Style="{StaticResource ModernTextBox}"
+                                    IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Total Factura"
+                                     Margin="0,0,0,4"
+                                     FontWeight="SemiBold"/>
+                            <TextBox x:Name="txtTotalFactura"
+                                    Style="{StaticResource ModernTextBox}"
+                                    IsReadOnly="True"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </GroupBox>
 
-                <Label Content="Fecha Inicio:" 
-                       VerticalAlignment="Center" 
-                       Margin="0,0,10,0"/>
-                <DatePicker x:Name="dpFechaInicio" 
-                            Grid.Column="1" 
-                            Width="200"/>
-                <Label Content="Fecha Fin:" 
-                       Grid.Column="2" 
-                       VerticalAlignment="Center" 
-                       Margin="10,0,10,0"/>
-                <DatePicker x:Name="dpFechaFin" 
-                            Grid.Column="3" 
-                            Width="200"/>
-                <Button Content="Filtrar" 
-                        Grid.Column="4" 
-                        Click="btnFiltrar_Click"
-                        Width="100"/>
-            </Grid>
-        </GroupBox>
+                <GroupBox Header="Historial de Pagos"
+          Style="{StaticResource ModernGroupBox}">
+                    <DockPanel>
+                        <!-- Búsqueda Avanzada -->
+                        <GroupBox Header="Búsqueda Avanzada" Style="{StaticResource ModernGroupBox}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-        <!-- Detalles de la factura -->
-        <GroupBox Header="Información de Factura" 
-                  Grid.Row="2">
-            <UniformGrid Columns="2" 
-                         HorizontalAlignment="Left">
-                <StackPanel Margin="0,0,20,0">
-                    <Label Content="Cliente:"/>
-                    <TextBox x:Name="txtCliente" 
-                            Width="250" 
-                            IsReadOnly="True"/>
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Total Factura:"/>
-                    <TextBox x:Name="txtTotalFactura" 
-                            Width="150" 
-                            IsReadOnly="True"/>
-                </StackPanel>
-            </UniformGrid>
-        </GroupBox>
+                                <DatePicker x:Name="dpBusquedaInicio" Height="36" Margin="0,0,8,0"/>
+                                <DatePicker x:Name="dpBusquedaFin" Grid.Column="1" Height="36" Margin="0,0,8,0"/>
+                                <ComboBox x:Name="cmbMetodoBusqueda" Grid.Column="2" Height="36" Width="200">
+                                    <ComboBoxItem Content="Todos"/>
+                                    <ComboBoxItem Content="Efectivo"/>
+                                    <ComboBoxItem Content="Tarjeta de Crédito"/>
+                                    <ComboBoxItem Content="Transferencia"/>
+                                </ComboBox>
+                                <Button Grid.Column="3" Content="Buscar" Style="{StaticResource ModernButton}" Click="btnBuscarPagos_Click"/>
+                            </Grid>
+                        </GroupBox>
 
-        <!-- Lista de pagos realizados -->
-        <GroupBox Header="Historial de Pagos" 
-                  Grid.Row="3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                        <!-- Información de Pagos -->
+                        <Grid DockPanel.Dock="Bottom" Margin="0,16,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                <DataGrid x:Name="dgPagos" 
-                         AutoGenerateColumns="False"
-                         IsReadOnly="True"
-                         AlternatingRowBackground="#F8F8F8"
-                         BorderBrush="#DDDDDD"
-                         GridLinesVisibility="All">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Fecha" 
-                                          Binding="{Binding FechaPago}" 
-                                          Width="150"/>
-                        <DataGridTextColumn Header="Monto" 
-                                          Binding="{Binding MontoPagado, StringFormat=C}" 
-                                          Width="120"/>
-                        <DataGridTextColumn Header="Método de Pago" 
-                                          Binding="{Binding MetodoPago}" 
-                                          Width="150"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <StackPanel Margin="0,0,16,0">
+                                <TextBlock Text="Total Pagado"
+                          Margin="0,0,0,4"
+                          FontWeight="SemiBold"/>
+                                <TextBox x:Name="txtTotalPagado"
+                         Style="{StaticResource ModernTextBox}"
+                         Width="200"
+                         IsReadOnly="True"/>
+                            </StackPanel>
 
-                <StackPanel Grid.Row="1" 
-                          Orientation="Horizontal" 
-                          Margin="0,10,0,0">
-                    <StackPanel Margin="0,0,20,0">
-                        <Label Content="Total Pagado:"/>
-                        <TextBox x:Name="txtTotalPagado" 
-                                Width="150" 
-                                IsReadOnly="True"/>
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Saldo Pendiente:"/>
-                        <TextBox x:Name="txtSaldoPendiente" 
-                                Width="150" 
-                                IsReadOnly="True"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Saldo Pendiente"
+                          Margin="0,0,0,4"
+                          FontWeight="SemiBold"/>
+                                <TextBox x:Name="txtSaldoPendiente"
+                         Style="{StaticResource ModernTextBox}"
+                         Width="200"
+                         IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
 
-        <!-- Registro de nuevo pago -->
-        <GroupBox Header="Registrar Pago" 
-                  Grid.Row="4">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                        <!-- DataGrid de Pagos -->
+                        <DataGrid x:Name="dgPagos"
+                 Style="{StaticResource ModernDataGrid}"
+                 AutoGenerateColumns="False"
+                 IsReadOnly="True"
+                 MinHeight="200">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Fecha"
+                                    Binding="{Binding FechaPago}"
+                                    Width="*"/>
+                                <DataGridTextColumn Header="Monto"
+                                    Binding="{Binding MontoPagado, StringFormat=C}"
+                                    Width="*"/>
+                                <DataGridTextColumn Header="Método de Pago"
+                                    Binding="{Binding MetodoPago}"
+                                    Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </GroupBox>
 
-                <Label Content="Monto:" 
-                       VerticalAlignment="Center"/>
-                <TextBox x:Name="txtMontoPago" 
-                        Grid.Column="1"/>
-                <Label Content="Método de Pago:" 
-                       Grid.Column="2" 
-                       Margin="10,0,0,0"/>
-                <ComboBox x:Name="cmbMetodoPago" 
-                         Grid.Column="3">
-                    <ComboBoxItem Content="Efectivo"/>
-                    <ComboBoxItem Content="Tarjeta de Crédito"/>
-                    <ComboBoxItem Content="Transferencia"/>
-                </ComboBox>
 
-                <StackPanel Grid.Row="1" 
-                          Grid.ColumnSpan="5" 
-                          Orientation="Horizontal" 
-                          HorizontalAlignment="Right" 
-                          Margin="0,10,0,0">
-                    <Button Content="Eliminar Pago" 
-                            Click="btnEliminarPago_Click"
-                            Background="#F44336"/>
-                    <Button Content="Registrar Pago" 
-                            Click="btnRegistrarPago_Click"
-                            Background="#4CAF50"/>
-                </StackPanel>
-            </Grid>
-        </GroupBox>
-    </Grid>
+                <!-- Registro de Nuevo Pago -->
+                <GroupBox Header="Registrar Pago"
+                         Style="{StaticResource ModernGroupBox}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="0,0,8,0">
+                                <TextBlock Text="Monto"
+                                         Margin="0,0,0,4"
+                                         FontWeight="SemiBold"/>
+                                <TextBox x:Name="txtMontoPago"
+                                        Style="{StaticResource ModernTextBox}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Método de Pago"
+                                         Margin="0,0,0,4"
+                                         FontWeight="SemiBold"/>
+                                <ComboBox x:Name="cmbMetodoPago"
+                                         Style="{StaticResource ModernComboBox}">
+                                    <ComboBoxItem Content="Efectivo"/>
+                                    <ComboBoxItem Content="Tarjeta de Crédito"/>
+                                    <ComboBoxItem Content="Transferencia"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Grid.Row="1"
+                                  Orientation="Horizontal"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,16,0,0">
+                            <Button Content="Eliminar Pago"
+                                    Style="{StaticResource ModernButton}"
+                                    Background="#F44336"
+                                    Click="btnEliminarPago_Click"/>
+                            <Button Content="Registrar Pago"
+                                    Style="{StaticResource ModernButton}"
+                                    Background="#4CAF50"
+                                    Click="btnRegistrarPago_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <!-- Estado de la Factura -->
+                <GroupBox Header="Estado de la Factura"
+                         Style="{StaticResource ModernGroupBox}">
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Right"
+                                Content="Pagar Total"
+                                Style="{StaticResource ModernButton}"
+                                Click="btnPagarTotal_Click"
+                                Width="120"/>
+                        <TextBox x:Name="txtEstadoFactura"
+                                Style="{StaticResource ModernTextBox}"
+                                IsReadOnly="True"
+                                Margin="0,0,8,0"/>
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
 </Window>
