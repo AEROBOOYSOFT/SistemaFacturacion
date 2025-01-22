@@ -2,7 +2,6 @@
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,9 +9,13 @@ namespace SistemaFacturacion.USUARIOS
 {
     public partial class Login : Window
     {
+        // Instancia de la clase Autenticacion
+        private Autenticacion autenticacion;
+
         public Login()
         {
             InitializeComponent();
+            autenticacion = new Autenticacion(); // Crear la instancia de autenticación
         }
 
         // Permite mover la ventana.
@@ -46,15 +49,23 @@ namespace SistemaFacturacion.USUARIOS
                 return;
             }
 
-            // Validar las credenciales.
+            // Validar las credenciales usando la clase Autenticacion
             if (ValidarUsuario(username, password))
             {
-                MessageBox.Show($"Bienvenido, {username}!", "Inicio de Sesión Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Si la validación es exitosa, asignar el usuario autenticado
+                if (autenticacion.IniciarSesion(username, password))
+                {
+                    MessageBox.Show($"Bienvenido, {username}!", "Inicio de Sesión Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Abrir la ventana principal.
-                this.Hide();
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                    // Abrir la ventana principal.
+                    this.Hide();
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error de inicio de sesión", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -62,7 +73,7 @@ namespace SistemaFacturacion.USUARIOS
             }
         }
 
-        // Método para validar credenciales.
+        // Método para validar credenciales desde la base de datos.
         private bool ValidarUsuario(string username, string password)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["FacturacionDB"].ConnectionString;
@@ -105,6 +116,7 @@ namespace SistemaFacturacion.USUARIOS
             return false;
         }
 
+        // Restablecimiento de la contraseña.
         private void ResetPassword_Click(object sender, RoutedEventArgs e)
         {
             // Lógica para restablecer la contraseña si es necesario.

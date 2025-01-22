@@ -17,7 +17,7 @@ namespace SistemaFacturacion.CLASES
         public DateTime FechaCreacion { get; set; }
         public int RoleID { get; internal set; }
         public Rol Rol { get; internal set; }
-        public List<Rol> Roles { get; set; } // Lista de roles del usuario
+        public List<Rol> Roles { get; set; } 
         public List<Permiso> Permisos { get; set; }
         public Usuario() { }
 
@@ -30,7 +30,7 @@ namespace SistemaFacturacion.CLASES
             Contraseña = contraseña;
             Activo = activo;
             FechaCreacion = fechaCreacion;
-            Roles = new List<Rol>(); // Inicializar la lista
+            Roles = new List<Rol>(); 
         }
     }
 }

@@ -166,11 +166,13 @@
     <Compile Include="CLASES CRUD\Usuarioscrud.cs" />
     <Compile Include="CLASES CRUD\UsuarioService.cs" />
     <Compile Include="CLASES\AuditoriaServicio.cs" />
+    <Compile Include="CLASES\Autenticacion.cs" />
     <Compile Include="CLASES\Cliente.cs" />
     <Compile Include="CLASES\Configuracion.cs" />
     <Compile Include="CLASES\ControlPermisos.cs" />
     <Compile Include="CLASES\DetalleFactura.cs" />
     <Compile Include="CLASES\Factura.cs" />
+    <Compile Include="CLASES\GeneradorRecibos.cs" />
     <Compile Include="CLASES\MovimientoInventario.cs" />
     <Compile Include="CLASES\Pago.cs" />
     <Compile Include="CLASES\Permiso.cs" />
