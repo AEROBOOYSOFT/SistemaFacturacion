@@ -91,7 +91,7 @@ namespace SistemaFacturacion.FACTURACION
 
             decimal tasaImpuesto = ConfiguracionCRUD.ObtenerImpuestoITBIS(); // Asegúrate de que este método funcione correctamente
             decimal impuestos = subtotal * tasaImpuesto / 100; // Convertir tasa a porcentaje
-            decimal total = subtotal + impuestos;
+            total = subtotal + impuestos;  // Asegúrate de actualizar la variable 'total'
 
             // Mostrar en la interfaz
             txtSubtotal.Text = subtotal.ToString("F2");
@@ -101,7 +101,7 @@ namespace SistemaFacturacion.FACTURACION
             // Guardar en la factura actual
             facturaActual.Subtotal = subtotal;
             facturaActual.Impuestos = impuestos;
-            facturaActual.Total = total;
+            facturaActual.Total = total;  // Asegúrate de que facturaActual.Total también se actualice
         }
 
 
@@ -130,11 +130,12 @@ namespace SistemaFacturacion.FACTURACION
             {
                 IdCliente = (int)cmbClientes.SelectedValue,
                 Fecha = DateTime.Now,
-                Total = total,
+                Total = total,  // Aquí ya debería tener el valor correcto
                 Detalles = detalleFactura,
                 Cliente = clienteSeleccionado,
                 Estado = true // Asignar un estado válido (por ejemplo, 1 para activa)
-            }; 
+            };
+        
 
             try
             {
