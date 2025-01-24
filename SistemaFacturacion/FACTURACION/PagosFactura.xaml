@@ -324,20 +324,24 @@
                 </GroupBox>
 
                 <!-- Estado de la Factura -->
-                <GroupBox Header="Estado de la Factura"
-                         Style="{StaticResource ModernGroupBox}">
+                <GroupBox Header="Estado de la Factura" Style="{StaticResource ModernGroupBox}">
                     <DockPanel LastChildFill="True">
                         <Button DockPanel.Dock="Right"
-                                Content="Pagar Total"
-                                Style="{StaticResource ModernButton}"
-                                Click="btnPagarTotal_Click"
-                                Width="120"/>
-                        <TextBox x:Name="txtEstadoFactura"
-                                Style="{StaticResource ModernTextBox}"
-                                IsReadOnly="True"
-                                Margin="0,0,8,0"/>
+                Content="Pagar Total"
+                Style="{StaticResource ModernButton}"
+                Click="btnPagarTotal_Click"
+                Width="120"/>
+
+                        <!-- Border alrededor del TextBox -->
+                        <Border x:Name="estadoFacturaBorder" BorderBrush="Black" BorderThickness="1" Margin="0,0,8,0">
+                            <TextBox x:Name="txtEstadoFactura"
+                     Style="{StaticResource ModernTextBox}"
+                     IsReadOnly="True"
+                     Margin="0"/>
+                        </Border>
                     </DockPanel>
                 </GroupBox>
+
             </StackPanel>
         </ScrollViewer>
     </Border>
