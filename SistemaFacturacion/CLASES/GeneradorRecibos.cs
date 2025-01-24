@@ -1,14 +1,12 @@
 ﻿using SistemaFacturacion.Clases;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using System.IO;
+using iText.Kernel.Font;
+using iText.IO.Font.Constants;
 
 namespace SistemaFacturacion.CLASES
 {
@@ -25,10 +23,14 @@ namespace SistemaFacturacion.CLASES
                 {
                     Document document = new Document(pdf);
 
+                    // Definir las fuentes
+                    PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                    PdfFont italicFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
+
                     // Encabezado del recibo
                     document.Add(new Paragraph("RECIBO DE PAGO")
+                        .SetFont(boldFont)
                         .SetFontSize(18)
-                        .SetBold()
                         .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
 
                     document.Add(new Paragraph($"Empresa: {empresa}\nRUC: {ruc}\nDirección: {direccion}")
@@ -38,15 +40,15 @@ namespace SistemaFacturacion.CLASES
                         .SetFontSize(10));
 
                     document.Add(new Paragraph($"Factura ID: {factura.IdFactura}")
-                        .SetFontSize(12)
-                        .SetBold());
+                        .SetFont(boldFont)
+                        .SetFontSize(12));
 
                     document.Add(new Paragraph($"Cliente: {factura.Cliente.Nombre}\nTotal Factura: {factura.Total:C}")
                         .SetFontSize(12));
 
                     document.Add(new Paragraph("Detalle del Pago:")
-                        .SetFontSize(14)
-                        .SetBold());
+                        .SetFont(boldFont)
+                        .SetFontSize(14));
 
                     Table table = new Table(2).UseAllAvailableWidth();
                     table.AddCell("Fecha de Pago:");
@@ -58,8 +60,8 @@ namespace SistemaFacturacion.CLASES
                     document.Add(table);
 
                     document.Add(new Paragraph("\n\nGracias por su pago.")
-                        .SetFontSize(10)
-                        .SetItalic());
+                        .SetFont(italicFont)
+                        .SetFontSize(10));
 
                     document.Close();
                 }
