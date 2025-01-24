@@ -220,6 +220,30 @@
                         </StackPanel>
                     </Button>
                 </Border>
+
+                <!-- Contenedor de botón para la gestión de pagos y cobros. -->
+                <Border Background="White" 
+        CornerRadius="8" 
+        Margin="10" 
+        Width="250" 
+        Height="180">
+                    <Button Style="{StaticResource MenuButtonStyle}"
+            Click="btnPagos_Click">
+                        <StackPanel>
+                            <TextBlock Text="💳" FontSize="32" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Gestión de Pagos" 
+                     FontSize="16" 
+                     FontWeight="SemiBold" 
+                     Margin="0,10"/>
+                            <TextBlock Text="Control de pagos y cobros" 
+                     TextWrapping="Wrap" 
+                     TextAlignment="Center" 
+                     Foreground="#666666"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+
+
             </WrapPanel>
         </Grid>
     </DockPanel>

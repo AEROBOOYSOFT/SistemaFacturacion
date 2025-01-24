@@ -348,13 +348,5 @@ namespace SistemaFacturacion.FACTURACION
 
         }
 
-        private void txtMontoPago_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            decimal saldoPendiente = decimal.Parse(txtSaldoPendiente.Text);
-            if (decimal.TryParse(txtMontoPago.Text, out decimal monto) && monto > saldoPendiente)
-                txtMontoPago.BorderBrush = new SolidColorBrush(Colors.Red);
-            else
-                txtMontoPago.BorderBrush = new SolidColorBrush(Colors.Gray);
-        }
     }
 }

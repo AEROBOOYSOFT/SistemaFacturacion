@@ -87,6 +87,12 @@ namespace SistemaFacturacion
             var ventanaConsultaInventario = new INVENTARIO.ConsultaMovimientosInventario();
             ventanaConsultaInventario.Show(); // Mostrar la ventana
         }
+        private void btnPagos_Click(object sender, RoutedEventArgs e)
+        {
+            // Abre la ventana de gestión de pagos
+            var ventanaPagos = new PagosFactura();
+            ventanaPagos.ShowDialog(); // Abre la ventana como modal
+        }
 
     }
 }
