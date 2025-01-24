@@ -333,12 +333,15 @@
                 Width="120"/>
 
                         <!-- Border alrededor del TextBox -->
-                        <Border x:Name="estadoFacturaBorder" BorderBrush="Black" BorderThickness="1" Margin="0,0,8,0">
-                            <TextBox x:Name="txtEstadoFactura"
-                     Style="{StaticResource ModernTextBox}"
-                     IsReadOnly="True"
-                     Margin="0"/>
+                        <Border x:Name="estadoFacturaBorder" BorderThickness="1" CornerRadius="4" Margin="0,0,8,0">
+                            <TextBlock x:Name="txtEstadoFactura" 
+               Text="Pendiente" 
+               Foreground="White" 
+               FontWeight="SemiBold" 
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
                         </Border>
+
                     </DockPanel>
                 </GroupBox>
 

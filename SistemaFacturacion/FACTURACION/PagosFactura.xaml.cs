@@ -316,10 +316,12 @@ namespace SistemaFacturacion.FACTURACION
             }
             else
             {
-                estadoFacturaBorder.Background = new SolidColorBrush(Colors.Orange);
+                estadoFacturaBorder.Background = new SolidColorBrush(Colors.Red);
                 txtEstadoFactura.Text = "Pendiente";
             }
         }
+      
+
         private void btnSugerirPagoTotal_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(txtFacturaID.Text, out int facturaID))
