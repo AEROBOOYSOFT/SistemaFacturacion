@@ -301,20 +301,22 @@ namespace SistemaFacturacion.CLASES_CRUD
         // Método para obtener estado de una factura específica
         public static string ObtenerEstadoFactura(int facturaID)
         {
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                // Asegúrate de abrir la conexión antes de ejecutar la consulta
+                conn.Open();
+
                 string query = @"
-            SELECT 
-                CASE 
-                    WHEN f.Total <= ISNULL(SUM(p.MontoPagado), 0) 
-                    THEN 'Pagada' 
-                    ELSE 'Pendiente' 
-                END AS EstadoFactura
-            FROM Facturas f
-            LEFT JOIN Pagos p ON f.FacturaID = p.FacturaID
-            WHERE f.FacturaID = @FacturaID
-            GROUP BY f.Total;
+        SELECT 
+            CASE 
+                WHEN f.Total <= ISNULL(SUM(p.Monto), 0) 
+                THEN 'Pagada' 
+                ELSE 'Pendiente' 
+            END AS EstadoFactura
+        FROM Facturas f
+        LEFT JOIN Pagos p ON f.FacturaID = p.FacturaID
+        WHERE f.FacturaID = @FacturaID
+        GROUP BY f.Total;
         ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -329,7 +331,7 @@ namespace SistemaFacturacion.CLASES_CRUD
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string query = @"
-            SELECT f.Total - ISNULL(SUM(p.MontoPagado), 0) AS SaldoPendiente
+            SELECT f.Total - ISNULL(SUM(p.Monto), 0) AS SaldoPendiente
             FROM Facturas f
             LEFT JOIN Pagos p ON f.FacturaID = p.FacturaID
             WHERE f.FacturaID = @FacturaID
