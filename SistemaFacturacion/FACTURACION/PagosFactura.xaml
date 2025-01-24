@@ -332,6 +332,7 @@
                                     Click="btnSugerirPagoTotal_Click"
                                     Width="160"/>
                             <Button Content="Registrar Pago"
+                                    ToolTip="Guarda el pago de la factura"
                                     Style="{StaticResource ModernButton}"
                                     Background="#4CAF50"
                                     Click="btnRegistrarPago_Click"/>
