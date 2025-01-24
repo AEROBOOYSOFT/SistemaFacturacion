@@ -316,10 +316,12 @@ namespace SistemaFacturacion.FACTURACION
             }
             else
             {
-                estadoFacturaBorder.Background = new SolidColorBrush(Colors.Orange);
+                estadoFacturaBorder.Background = new SolidColorBrush(Colors.Red);
                 txtEstadoFactura.Text = "Pendiente";
             }
         }
+      
+
         private void btnSugerirPagoTotal_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(txtFacturaID.Text, out int facturaID))
@@ -328,7 +330,11 @@ namespace SistemaFacturacion.FACTURACION
 
                 if (saldoPendiente > 0)
                 {
-                    txtMontoPago.Text = saldoPendiente.ToString("N2");
+                    // Mostrar mensaje de confirmación antes de sugerir el pago total
+                    if (MessageBox.Show("¿Desea sugerir el pago total pendiente?", "Confirmación", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        txtMontoPago.Text = saldoPendiente.ToString("N2");
+                    }
                 }
                 else
                 {
@@ -339,6 +345,7 @@ namespace SistemaFacturacion.FACTURACION
             {
                 MessageBox.Show("Ingrese un ID de factura válido.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+
         }
 
     }
