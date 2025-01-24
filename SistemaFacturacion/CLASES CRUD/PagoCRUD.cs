@@ -11,7 +11,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 {
     public static class PagoCRUD
     {
-        private static string connectionString = "your_connection_string_here";
+        private static string connectionString = "Server=aerobooy;Database=SistemaFacturacion;User ID=sa;Password=aerobooy2020;Encrypt=False;TrustServerCertificate=True";
 
         // Método para insertar un nuevo pago
         public static void InsertarPago(Pago pago)
