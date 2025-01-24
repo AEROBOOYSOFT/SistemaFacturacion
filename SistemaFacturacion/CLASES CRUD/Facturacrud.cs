@@ -298,6 +298,52 @@ namespace SistemaFacturacion.CLASES_CRUD
             }
             return null;
         }
+        // Método para obtener estado de una factura específica
+        public static string ObtenerEstadoFactura(int facturaID)
+        {
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT 
+                CASE 
+                    WHEN f.Total <= ISNULL(SUM(p.MontoPagado), 0) 
+                    THEN 'Pagada' 
+                    ELSE 'Pendiente' 
+                END AS EstadoFactura
+            FROM Facturas f
+            LEFT JOIN Pagos p ON f.FacturaID = p.FacturaID
+            WHERE f.FacturaID = @FacturaID
+            GROUP BY f.Total;
+        ";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@FacturaID", facturaID);
+
+                object result = cmd.ExecuteScalar();
+                return result?.ToString() ?? "Pendiente";
+            }
+        }
+        public static decimal ObtenerSaldoPendiente(int facturaID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT f.Total - ISNULL(SUM(p.MontoPagado), 0) AS SaldoPendiente
+            FROM Facturas f
+            LEFT JOIN Pagos p ON f.FacturaID = p.FacturaID
+            WHERE f.FacturaID = @FacturaID
+            GROUP BY f.Total;
+        ";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@FacturaID", facturaID);
+
+                object result = cmd.ExecuteScalar();
+                return result != null ? Convert.ToDecimal(result) : 0m;
+            }
+        }
+
 
     }
 }

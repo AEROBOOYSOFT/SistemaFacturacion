@@ -14,6 +14,7 @@ namespace SistemaFacturacion.CLASES
         public DateTime FechaPago { get; set; }
         public string MetodoPago { get; set; }
         public string Observaciones { get; set; }
+        public int UsuarioID { get; set; } 
     }
 
 }

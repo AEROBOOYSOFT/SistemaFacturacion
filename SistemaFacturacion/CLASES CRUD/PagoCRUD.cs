@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SistemaFacturacion.CLASES_CRUD
 {
@@ -18,8 +19,8 @@ namespace SistemaFacturacion.CLASES_CRUD
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Pagos (FacturaID, FechaPago, Monto, MetodoPago) " +
-                               "VALUES (@FacturaID, @FechaPago, @Monto, @MetodoPago)";
+                string query = "INSERT INTO Pagos (FacturaID, FechaPago, Monto, MetodoPago, UsuarioID) " +
+                               "VALUES (@FacturaID, @FechaPago, @Monto, @MetodoPago, @UsuarioID)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -27,10 +28,13 @@ namespace SistemaFacturacion.CLASES_CRUD
                     cmd.Parameters.AddWithValue("@FechaPago", pago.FechaPago);
                     cmd.Parameters.AddWithValue("@Monto", pago.Monto);
                     cmd.Parameters.AddWithValue("@MetodoPago", pago.MetodoPago);
+                    cmd.Parameters.AddWithValue("@UsuarioID", pago.UsuarioID);
+
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         // Método para obtener los pagos de una factura específica
         public static List<Pago> ObtenerPagosPorFactura(int facturaId)
@@ -64,6 +68,7 @@ namespace SistemaFacturacion.CLASES_CRUD
 
             return pagos;
         }
+       
 
         // Método para actualizar un pago
         public static void ActualizarPago(Pago pago)
@@ -85,21 +90,40 @@ namespace SistemaFacturacion.CLASES_CRUD
             }
         }
 
-        // Método para eliminar un pago
-        public static void EliminarPago(int pagoId)
+
+        /* Método para eliminar un pago numero 1
+         public static void EliminarPago(int pagoId)
+         {
+             using (SqlConnection conn = new SqlConnection(connectionString))
+             {
+                 conn.Open();
+                 string query = "DELETE FROM Pagos WHERE PagoID = @PagoID";
+
+                 using (SqlCommand cmd = new SqlCommand(query, conn))
+                 {
+                     cmd.Parameters.AddWithValue("@PagoID", pagoId);
+                     cmd.ExecuteNonQuery();
+                 }
+             }
+         }
+           */
+
+
+        // Método para eliminar un pago numero 2 metodo boleano
+        public static bool EliminarPago(int pagoID)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                conn.Open();
                 string query = "DELETE FROM Pagos WHERE PagoID = @PagoID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@PagoID", pagoID);
 
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@PagoID", pagoId);
-                    cmd.ExecuteNonQuery();
-                }
+                int filasAfectadas = cmd.ExecuteNonQuery();
+                return filasAfectadas > 0;
             }
         }
+       
+
 
         // Método para obtener el monto total pagado de una factura
         public static decimal ObtenerTotalPagado(int facturaId)
@@ -117,5 +141,57 @@ namespace SistemaFacturacion.CLASES_CRUD
                 }
             }
         }
+        public static List<Pago> BuscarPagos(DateTime? fechaInicio, DateTime? fechaFin, string metodoPago)
+        {
+            List<Pago> listaPagos = new List<Pago>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Pagos WHERE 1=1";
+
+                if (fechaInicio.HasValue && fechaFin.HasValue)
+                {
+                    query += " AND FechaPago BETWEEN @FechaInicio AND @FechaFin";
+                }
+
+                if (!string.IsNullOrEmpty(metodoPago) && metodoPago != "Todos")
+                {
+                    query += " AND MetodoPago = @MetodoPago";
+                }
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                if (fechaInicio.HasValue && fechaFin.HasValue)
+                {
+                    cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio.Value);
+                    cmd.Parameters.AddWithValue("@FechaFin", fechaFin.Value);
+                }
+
+                if (!string.IsNullOrEmpty(metodoPago) && metodoPago != "Todos")
+                {
+                    cmd.Parameters.AddWithValue("@MetodoPago", metodoPago);
+                }
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    listaPagos.Add(new Pago
+                    {
+                        PagoID = Convert.ToInt32(reader["PagoID"]),
+                        FacturaID = Convert.ToInt32(reader["FacturaID"]),
+                        FechaPago = Convert.ToDateTime(reader["FechaPago"]),
+                        Monto = Convert.ToDecimal(reader["MontoPagado"]),
+                        MetodoPago = reader["MetodoPago"].ToString()
+                    });
+                }
+            }
+
+            return listaPagos;
+        }
+
+
+      
+
     }
 }
