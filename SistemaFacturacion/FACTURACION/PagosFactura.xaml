@@ -155,11 +155,13 @@
 
                             <DatePicker x:Name="dpFechaInicio"
                                       Height="36"
-                                      Margin="0,0,8,0"/>
+                                      Margin="0,0,8,0"
+                                         TabIndex="1"/>
                             <DatePicker x:Name="dpFechaFin"
                                       Grid.Column="1"
                                       Height="36"
-                                      Margin="0,0,8,0"/>
+                                      Margin="0,0,8,0"
+                                        TabIndex="2"/>
                             <Button Grid.Column="2"
                                     Content="Filtrar"
                                     Style="{StaticResource ModernButton}"
